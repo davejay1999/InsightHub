@@ -189,6 +189,7 @@ function handleSignin(event) {
       if (data.hasOwnProperty("token")) {
         // Save the token for future use (e.g., in local storage or a cookie)
         localStorage.setItem("token", data.token);
+
         // Redirect to another page or perform further actions
         window.location.href = "/summary/upload_with_url.html";
       } else {

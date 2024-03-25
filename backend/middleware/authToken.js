@@ -7,20 +7,22 @@ const authenticateToken = async (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   const clientIp = req.ip; // Client IP address
+  const requestUrl = req.originalUrl; // Request URL
+
+  const currentTime = new Date().toLocaleString();
 
   console.log(
-    `\nVerifying Authenticating token - ${token.slice(
-      0,
-      15
-    )} ; client-ip - ${clientIp}`
+    `[${currentTime}] Verifying Authentication Token - ${
+      token ? token.slice(0, 15) + "..." : "No Token"
+    }, Client IP: ${clientIp}, Request URL: ${requestUrl}`
   );
 
   if (!token) {
     console.log(`Token not Provided.`);
 
     await pool.query(
-      "INSERT INTO authVerificationLogs (token, login_time, status, user_id) VALUES (?, NOW(), ?, ?)",
-      [null, 0, null]
+      "INSERT INTO authVerificationLogs (token, login_time, status, user_id, ip_address, request_url) VALUES (?, NOW(), ?, ?, ?, ?)",
+      [null, 0, null, clientIp, requestUrl]
     );
 
     return res.status(401).json({ message: "No token provided" });
@@ -33,18 +35,19 @@ const authenticateToken = async (req, res, next) => {
     console.log(`Token is Authentic. User Id - ${user_id_decoded}`);
 
     await pool.query(
-      "INSERT INTO authVerificationLogs (token, login_time, status, user_id) VALUES (?, NOW(), ?, ?)",
-      [token, 1, user_id_decoded]
+      "INSERT INTO authVerificationLogs (token, login_time, status, user_id, ip_address, request_url) VALUES (?, NOW(), ?, ?, ?, ?)",
+      [token, 1, user_id_decoded, clientIp, requestUrl]
     );
 
     next();
   } catch (error) {
+    console.log(`Token is Invalid + ${error}`);
+
     await pool.query(
-      "INSERT INTO authVerificationLogs (token, login_time, status, user_id) VALUES (?, NOW(), ?, ?)",
-      [token, 0, null]
+      "INSERT INTO authVerificationLogs (token, login_time, status, user_id, ip_address, request_url) VALUES (?, NOW(), ?, ?, ?, ?)",
+      [token, 0, null, clientIp, requestUrl]
     );
 
-    console.log(`Token is Invalid + ${error}`);
     res.status(403).json({ message: "Invalid token", error: error });
   }
 };

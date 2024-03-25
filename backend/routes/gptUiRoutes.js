@@ -18,4 +18,8 @@ router.get("/upload_with_url", (req, res) => {
   );
 });
 
+router.get("/index", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../gpt_frontend/index.html"));
+});
+
 module.exports = router;

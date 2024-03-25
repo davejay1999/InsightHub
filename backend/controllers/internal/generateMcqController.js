@@ -68,11 +68,9 @@ function constructPrompt(summary, number_of_q) {
             "question": "What is the capital of France?",
             "options": {
                 "A": "Paris",
-                "B": "London",
-                "C": "Berlin",
-                "D": "Madrid"
+                ...
             },
-            "answer": "A"
+            "answer": "B"
         }
         // more questions
     ]

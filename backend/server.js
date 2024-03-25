@@ -34,7 +34,7 @@ app.use("/gpt", gptUiRoutes);
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "gpt_frontend")));
 app.use(express.static(path.join(__dirname, "..", "gpt_frontend/login")));
-app.use(express.static(path.join(__dirname, "..", "gpt/summary")));
+app.use(express.static(path.join(__dirname, "..", "gpt_frontend/summary")));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
