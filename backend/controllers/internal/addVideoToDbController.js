@@ -19,6 +19,7 @@ exports.addVideoToDb = async (req, res) => {
       total_tokens: 0,
     };
     console.log(`cache hit status - ${existingVideo.length > 0}`);
+
     if (existingVideo.length > 0) {
       // If Video Exists in DB
       cacheHitStatus = true;
@@ -26,7 +27,7 @@ exports.addVideoToDb = async (req, res) => {
         ...responseData,
         transcript: existingVideo[0].transcript,
         summary: existingVideo[0].summary,
-        mcq: JSON.parse(existingVideo[0].q_and_a),
+        mcq: existingVideo[0].q_and_a,
       };
     } else {
       // If Video Doesn't exist in DB
@@ -51,28 +52,14 @@ exports.addVideoToDb = async (req, res) => {
         });
       }
 
-      const { summary: summaryToSend, transcript: videoTranscript } =
-        internalSummaryResponse.data;
+      const {
+        summary: summaryToSend,
+        transcript: videoTranscript,
+        mcq: questionsData,
+      } = internalSummaryResponse.data;
 
       tokenUsed = internalSummaryResponse.data.usage;
-
-      const internalMcqQueryUrl = "http://localhost:3000/internal/getMcq";
-      let internalMcqQueryResponse;
-
-      try {
-        // To get MCQ Questions
-        internalMcqQueryResponse = await axios.post(internalMcqQueryUrl, {
-          summary: summaryToSend,
-          number_of_questions: req.body.number_of_questions,
-        });
-      } catch (error) {
-        return res.status(500).json({
-          error: "Internal Server Error while mcq generation ",
-          message: error.message,
-        });
-      }
-
-      const questionsData = JSON.parse(internalMcqQueryResponse.data.questions);
+      cacheHitStatus = false;
 
       // Insert the new data into the database
       await pool.query(
@@ -80,13 +67,10 @@ exports.addVideoToDb = async (req, res) => {
         [videoId, videoTranscript, summaryToSend, JSON.stringify(questionsData)]
       );
 
-      cacheHitStatus = false;
-
       responseData = {
         ...responseData,
         transcript: videoTranscript,
         summary: summaryToSend,
-        mcq: questionsData,
       };
     }
 
@@ -96,8 +80,9 @@ exports.addVideoToDb = async (req, res) => {
       ...responseData,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", message: error.message });
+    res.status(500).json({
+      error: "Internal Server Error in Add video to db controller ",
+      message: error.message,
+    });
   }
 };

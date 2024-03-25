@@ -25,26 +25,30 @@ exports.summarize = async (req, res) => {
       lang: "en",
     });
 
-    let subtitles_to_send = subtitles
+    let transcript_to_send = subtitles
       .map((subtitle) => subtitle.text)
       .join(" ")
       .slice(0, 3000);
+
+    console.log(
+      "DONE  - Extracting Subtitles " + transcript_to_send.slice(0, 50)
+    );
 
     const requestBody = {
       model: llm_model,
       messages: [
         {
           role: "system",
-          content: `Your primary job is to summarize the transcript of the video in ${summary_word_count} words. You should cover all the important points. Additional Instructions: ${additional_instructions}`,
+          content: constructPrompt(3, summary_word_count),
         },
         {
           role: "user",
-          content: subtitles_to_send,
+          content: transcript_to_send,
         },
       ],
     };
 
-    const complete_req_body = await axios.post(
+    const complete_res_body = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       requestBody,
       {
@@ -55,23 +59,21 @@ exports.summarize = async (req, res) => {
       }
     );
 
-    const summaryContent = complete_req_body.data.choices[0].message.content;
-    const usage = complete_req_body.data.usage;
+    const summaryContent = JSON.parse(
+      complete_res_body.data.choices[0].message.content
+    );
+    const usage = complete_res_body.data.usage;
 
     const customResponse = {
-      summary: summaryContent,
+      summary: summaryContent.summary,
+      mcq: summaryContent.mcq,
       usage: usage,
       word_limit: summary_word_count,
       additional_instructions: additional_instructions,
-      transcript: subtitles_to_send,
+      transcript: transcript_to_send,
     };
 
-    console.log(
-      `\nSummary Generation Successful - ${customResponse.summary.slice(
-        0,
-        50
-      )} \n`
-    );
+    console.log(`\nSummary Generation Successful`);
 
     res.status(200).json(customResponse); // Sending the custom response as JSON
   } catch (error) {
@@ -81,3 +83,31 @@ exports.summarize = async (req, res) => {
       .json({ error: "Internal Server Error", message: error.message });
   }
 };
+
+function constructPrompt(number_of_q, summary_word_limit) {
+  const prompt = `
+    Only Respond in valid JSON Format.
+    Your job is to input in a transcript given by user of a video and give produce a summary in ${summary_word_limit} 
+    using the summary, generate ${number_of_q} multiple-choice questions based on the content. Each question should have four options (A, B, C, D) and a correct answer.
+
+    Example Output:
+    "{
+      "summary" : " summary of the transcript .... ",
+    "mcq" : [
+        {
+            "question": "What is the capital of France?",
+            "options": {
+                "A": "Paris"
+                // more options
+            },
+            "answer": "B"
+        },
+        {
+            // next question
+        }
+        // more questions
+    ]
+  }"
+    `;
+  return prompt;
+}
