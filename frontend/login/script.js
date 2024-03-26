@@ -1,3 +1,4 @@
+
 const sign_in_btn = document.querySelector("#sign-in-btn");
 const sign_in_btn1 = document.querySelector("#sign-in-btn1");
 const sign_up_btn = document.querySelector("#sign-up-btn");
@@ -84,9 +85,9 @@ signUpForm.addEventListener("submit", function (event) {
     const requestBody = JSON.stringify({
       email: email,
       password: password,
-      fname: "aa",
-      lname: "aa",
-      phone: "456468",
+      fname: "place holder fname",
+      lname: "placeholder lname",
+      phone: "012345678",
       gender: "male",
       dob: "2020-11-1",
       // Add other fields if needed (e.g., fname, lname, phone, gender, dob)
