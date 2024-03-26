@@ -22,6 +22,14 @@ router.get("/summary/upload_with_url", (req, res) => {
   );
 });
 
+router.get("/edit_profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/edit_user.html"));
+});
+
+router.get("/user_history", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/user_history.html"));
+});
+
 router.get("/index", (req, res) => {
   res.sendFile(path.join(__dirname, "../../frontend/index.html"));
 });

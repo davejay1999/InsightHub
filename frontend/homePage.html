@@ -40,7 +40,8 @@
         <h1>Welcome to Insight Hub</h1>
         <button id="getUserDetails" class="button">Get The User Details</button>
         <button id="summarize" class="button">Summarize</button>
-        <button id="editProfile" class="button">Edit Profile</button>
+        <button id="user_history" class="button">User History Profile</button>
+        <button id="logout_button" class="button">Logout</button>
     </div>
 
     <script>
@@ -54,13 +55,18 @@
             console.log('Summarize clicked');
         });
 
-        document.getElementById('editProfile').addEventListener('click', function() {
-            window.location.href = '/edit_profile';
+        document.getElementById('user_history').addEventListener('click', function() {
+            window.location.href = '/user_history';
+        });
+
+         document.getElementById('logout_button').addEventListener('click', function() {
+             localStorage.clear();
+  window.location.href = "../login"; 
         });
 
     </script>
 
-   <script src="verifyLogin.js" defer></script>
+  
 </body>
 
 </html>
