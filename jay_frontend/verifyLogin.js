@@ -7,7 +7,7 @@ async function isLoggedIn() {
   }
 
   try {
-    const response = await fetch("/user/management/getUserDetails", {
+    const response = await fetch("/user/management/verifyJWT", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
