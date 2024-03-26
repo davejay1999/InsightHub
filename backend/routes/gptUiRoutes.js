@@ -11,6 +11,10 @@ router.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "../../frontend/login.html"));
 });
 
+router.get("/user-details", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/userDetails.html"));
+});
+
 // Serve the userDetails page
 router.get("/summary/upload_with_url", (req, res) => {
   res.sendFile(

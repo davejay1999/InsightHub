@@ -191,7 +191,7 @@ function handleSignin(event) {
         localStorage.setItem("token", data.token);
 
         // Redirect to another page or perform further actions
-        window.location.href = "/summary/upload_with_url";
+        window.location.href = "/";
       } else {
         // Display error message in a pop-up
         displayPopup(

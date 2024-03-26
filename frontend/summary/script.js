@@ -7,7 +7,7 @@ function handleLogout() {
   // Clear the data from local storage
   localStorage.clear();
   // Redirect to the login page or perform any other necessary actions
-  window.location.href = "../login.html"; // Replace 'login.html' with your actual login page URL
+  window.location.href = "../login"; // Replace 'login.html' with your actual login page URL
 }
 
 // Function to add event listener to the logout button
