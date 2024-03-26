@@ -71,6 +71,7 @@ exports.addVideoToDb = async (req, res) => {
         ...responseData,
         transcript: videoTranscript,
         summary: summaryToSend,
+        mcq: questionsData,
       };
     }
 
