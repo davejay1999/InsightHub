@@ -7,7 +7,7 @@ function handleLogout() {
   // Clear the data from local storage
   localStorage.clear();
   // Redirect to the login page or perform any other necessary actions
-  window.location.href = "../gpt/login.html"; // Replace 'login.html' with your actual login page URL
+  window.location.href = "../login.html"; // Replace 'login.html' with your actual login page URL
 }
 
 // Function to add event listener to the logout button
@@ -96,7 +96,7 @@ function redirectToAnotherPage() {
         // Store the MCQ data in localStorage
         localStorage.setItem("mcqData", JSON.stringify(data.mcq));
         // Redirect to index.html with both summary and MCQ data
-        window.location.href = "../gpt/index.html";
+        window.location.href = "../index.html";
       } else {
         console.error("Error: Request was not successful");
       }
