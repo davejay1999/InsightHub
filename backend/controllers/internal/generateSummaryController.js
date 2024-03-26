@@ -100,7 +100,8 @@ function constructPrompt(number_of_q, summary_word_limit) {
                 "A": "Paris"
                 // more options
             },
-            "answer": "B"
+            "answer": "B",
+            "explanation" : "35 word explanation ..."
         },
         {
             // next question
