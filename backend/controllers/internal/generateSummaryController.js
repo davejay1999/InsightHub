@@ -101,7 +101,7 @@ function constructPrompt(number_of_q, summary_word_limit) {
                 // more options
             },
             "answer": "B",
-            "explanation" : "35 word explanation ..."
+            "explanation" : "justification ..."
         },
         {
             // next question
