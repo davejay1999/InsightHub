@@ -66,6 +66,8 @@ exports.summarize = async (req, res) => {
 
     const customResponse = {
       summary: summaryContent.summary,
+      informal_summary: summaryContent.informal_summary,
+      detailed_summary: summaryContent.detailed_summary,
       mcq: summaryContent.mcq,
       usage: usage,
       word_limit: summary_word_count,
@@ -87,12 +89,16 @@ exports.summarize = async (req, res) => {
 function constructPrompt(number_of_q, summary_word_limit) {
   const prompt = `
     Only Respond in valid JSON Format.
-    Your job is to input in a transcript given by user of a video and give produce a summary in ${summary_word_limit} 
-    using the summary, generate ${number_of_q} multiple-choice questions based on the content. Each question should have four options (A, B, C, D) and a correct answer.
+    Your job is to input in a transcript given by user of a video and give produce 3 summaries - "summary" (short summary), "informal_summary" (in casual language), and a "detailed_summary"
+      generate ${number_of_q} multiple-choice questions based on the content. Each question should have four options (A, B, C, D) and a correct answer.
 
     Example Output:
     "{
-      "summary" : " summary of the transcript .... ",
+      "summary" : "100 word formal summary of the transcript .... ",
+      "informal_summary" : "100 word informal summary...",
+      "detailed_summary" : "200 word detailed summary ...",
+      "title" : "title for summary",
+
     "mcq" : [
         {
             "question": "What is the capital of France?",

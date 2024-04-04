@@ -29,7 +29,7 @@ exports.getSummary = async (req, res) => {
     });
 
     // Define summaryContent and usage variables here
-
+    console.log(JSON.stringify(addVideoToDbResponse.data));
     const cacheHitInt = addVideoToDbResponse.data.cache_hit ? 1 : 0;
 
     const [result] = await pool.query(

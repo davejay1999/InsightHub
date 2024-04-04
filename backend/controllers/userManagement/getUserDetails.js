@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const bcrypt = require("bcrypt");
-const SECRET_KEY = "your_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 exports.getUserDetails = async (req, res) => {
   try {

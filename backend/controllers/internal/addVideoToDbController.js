@@ -27,6 +27,8 @@ exports.addVideoToDb = async (req, res) => {
         ...responseData,
         transcript: existingVideo[0].transcript,
         summary: existingVideo[0].summary,
+        informal_summary: existingVideo[0].informal_summary,
+        detailed_summary: existingVideo[0].detailed_summary,
         mcq: existingVideo[0].q_and_a,
       };
     } else {
@@ -54,6 +56,8 @@ exports.addVideoToDb = async (req, res) => {
 
       const {
         summary: summaryToSend,
+        informal_summary: informal_summary_to_send,
+        detailed_summary: detailed_summary_to_send,
         transcript: videoTranscript,
         mcq: questionsData,
       } = internalSummaryResponse.data;
@@ -63,14 +67,24 @@ exports.addVideoToDb = async (req, res) => {
 
       // Insert the new data into the database
       await pool.query(
-        "INSERT INTO summaries (video_id, transcript, summary, q_and_a) VALUES (?, ?, ?, ?)",
-        [videoId, videoTranscript, summaryToSend, JSON.stringify(questionsData)]
+        "INSERT INTO summaries (video_id, transcript, summary, q_and_a, informal_summary , detailed_summary ) VALUES (?, ?, ?, ? , ? , ?)",
+        [
+          videoId,
+          videoTranscript,
+          summaryToSend,
+          JSON.stringify(questionsData),
+          informal_summary_to_send,
+          detailed_summary_to_send,
+        ]
       );
 
       responseData = {
         ...responseData,
         transcript: videoTranscript,
         summary: summaryToSend,
+        HI: "hi",
+        informal_summary: informal_summary_to_send,
+        detailed_summary: detailed_summary_to_send,
         mcq: questionsData,
       };
     }
