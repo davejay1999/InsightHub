@@ -1,6 +1,12 @@
 function convertGender(gender) {
+  // Check if gender is null or undefined and return null immediately
+  if (gender == null) {
+    return null;
+  }
+
   // Convert gender to lowercase for case-insensitive comparison
-  const genderLower = gender.toLowerCase();
+  // and trim spaces
+  const genderLower = gender.trim().toLowerCase();
 
   // Assign a number to each gender
   // 1 = Male, 2 = Female, 3 = Non-Binary, 4 = Transgender, 5 = Intersex, 6 = Prefer Not to Say, 7 = Other
