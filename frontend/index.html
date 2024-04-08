@@ -1,189 +1,242 @@
 <!DOCTYPE html>
+
 <html lang="en">
     
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <br>
+    <title>
+        Insight Hub
+    </title>
 
-        <br>
-        <title>
-            Insight Hub
-        </title>
+</head>
 
-        <nav id="sidebar">
-            <div class="float-top">
-                <div class="sidebar-controls">
-                    <button class="new-chat" onclick="window.location.href = 'Upload with url.html';">
-                        <i class="fa fa-plus"></i>
-                        New Summary
-                    </button>
-                    
-                </div>
+<body>   
 
-                <ul id="historyList">
-                    <!-- History items will be dynamically added here -->
-                </ul>
-                <div id="popup" class="popup">
-                    <div class="popup-content">
-                        <h2>Summary</h2>
-                        <div id="summary"></div>
-                    </div>
-                    <div class="popup-content">
-                        <h2>Transcript</h2>
-                        <div id="transcript"></div>
-                    </div>
-                    <div class="popup-content">
-                        <h2>Questions</h2>
-                        <div id="questions"></div>
-                    </div>
-                    <button class="close-btn" onclick="closePopup()">Close</button>
-                    <button onclick="exportToPDF()">Export to PDF</button>
-                </div>
-            
-                <script>
-                    // Fetch user history data from API
-                    async function fetchUserHistory() {
-                        // try {
-                        //     const response = await fetch('your_api_endpoint_here');
-                        //     const data = await response.json();
-                        //     return data;
-                        // } catch (error) {
-                        //     console.error('Error fetching user history:', error);
-                        // }
-            
-                        const data = [
-                            {
-                                summary: 'User history item 1',
-                                transcript: 'Transcript for user history item 1',
-                                questions: 'Questions for user history item 1'
-                            },
-                            {
-                                summary: 'User history item 2',
-                                transcript: 'Transcript for user history item 2',
-                                questions: 'Questions for user history item 2'
-                            },
-                            {
-                                summary: 'User history item 3',
-                                transcript: 'Transcript for user history item 3',
-                                questions: 'Questions for user history item 3'
-                            }
-                        ];
-                        return data;
-                    }
-            
-                    // Function to populate sidebar with user history
-                    async function populatesidebar() {
-                        const historyList = document.getElementById('historyList');
-                        const userHistory = await fetchUserHistory();
-            
-                        // Clear existing list items
-                        historyList.innerHTML = '';
-            
-                        // Loop through user history and create list items
-                        userHistory.forEach(item => {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = item.summary;
-                            listItem.addEventListener('click', () => showPopup(item));
-                            historyList.appendChild(listItem);
-                        });
-                    }
-            
-                    // Function to show the popup window with details
-                    function showPopup(historyItem) {
-                        const popup = document.getElementById('popup');
-                        const summary = document.getElementById('summary');
-                        const transcript = document.getElementById('transcript');
-                        const questions = document.getElementById('questions');
-            
-                        // Populate popup with details
-                        summary.textContent = historyItem.summary;
-                        transcript.textContent = historyItem.transcript;
-                        questions.textContent = historyItem.questions;
-            
-                        // Display the popup
-                        popup.style.display = 'block';
-                    }
-            
-                    // Function to close the popup window
-                    function closePopup() {
-                        const popup = document.getElementById('popup');
-                        popup.style.display = 'none';
-                    }
-            
-                    // Function to export content of the popup window to PDF
-                    function exportToPDF() {
-                        // Implement PDF export functionality here
-                        alert('Export to PDF functionality will be implemented here.');
-                    }
-            
-                    // Call the function to populate the sidebar with user history
-                    populatesidebar();
-                </script>
-            </div>
-            <div class="user-menu">
-                <button id="logoutButton">
-                    <i class="fa fa-sign-out">
-                    </i>
-                    Logout
+    
+<div class="child1">
+    <nav id="sidebar">
+        <div class="float-top">
+            <div class="sidebar-controls">
+                <button class="new-chat" onclick="window.location.href = 'Upload with url.html';">
+                    <i class="fa fa-plus"></i>
+                    New Summary
                 </button>
+                
             </div>
-        </nav>
-        <main>
-            <div class="logo1">
-                <br>
-                Insight Hub
-            </div>
-        </main>
-        <script src="script.js">
-        </script>
+
+            <ul class="conversations" id="historyList">
+                <!-- History items will be dynamically added here -->
+            </ul>
 
 
+        </div>
+        <div class="user-menu">
+            <button id="logoutButton">
+                <i class="fa fa-sign-out">
+                </i>
+                Logout
+            </button>
+        </div>
+    </nav>
+</div> 
 
-</html>
-<style>
-    /* Style the container */ .scroll-container { padding: 10px 10px 20px; width: 670px; height: 280px;
-    overflow-y: auto; /* Enable vertical scrollbar */ border: 3px solid rgba(171,
-    170, 170, 0.13); border-radius: 2%; background-color: #dddddd; padding:
-    10px; position: absolute; /* Add this line */ left: 37%; /* Position on
-    the left side */ top: 160px; /* Adjust as needed */ z-index: 5; bottom:
-    0; /* Adjust as needed */ /* Add this line */ } /* Style the scrollbar
-    */ .scrollbar { width: 20px; /* Width of the scrollbar */ background-color:
-    #5d4646; position: absolute; /* Add this line */ z-index: 5; }
-</style>
-<style>
-    #Text{
-        margin-top: 10px;
-        padding : 10px 10px
-    }
-</style>
 
+<div class="child2">
+    <h2 class="InsightHub">
+        Insight Hub
+    </h2>
+    <style>
+        .InsightHub {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2>Summary</h2>
+            <div id="summary"></div>
+        </div>
+        <div class="popup-content">
+            <h2>Questions</h2>
+            <div id="questions"></div>
+        </div>
+        <div class="popup-content">
+            <h2>Transcript</h2>
+            <div id="transcript"></div>
+        </div>
+
+        <button class="close-btn" onclick="closePopup()">Close</button>
+        <button class="pdf-btn"onclick="exportToPDF()">Export to PDF</button>
+    </div>
+            
+            <script>
+                // Fetch user history data from API
+                async function fetchUserHistory() {
+                    // try {
+                    //     const response = await fetch('your_api_endpoint_here');
+                    //     const data = await response.json();
+                    //     return data;
+                    // } catch (error) {
+                    //     console.error('Error fetching user history:', error);
+                    // }
+        
+                    const data = [
+                        {
+                            summary: 'User history item 1',
+                            transcript: 'Transcript for user history item 1',
+                            questions: 'Questions for user history item 1'
+                        },
+                        {
+                            summary: 'User history item 2',
+                            transcript: 'Transcript for user history item 2',
+                            questions: 'Questions for user history item 2'
+                        },
+                        {
+                            summary: 'User history item 3',
+                            transcript: 'Transcript for user history item 3',
+                            questions: 'Questions for user history item 3'
+                        }
+                    ];
+                    return data;
+                }
+        
+                // Function to populate sidebar with user history
+                async function populatesidebar() {
+                    const historyList = document.getElementById('historyList');
+                    const userHistory = await fetchUserHistory();
+        
+                    // Clear existing list items
+                    historyList.innerHTML = '';
+        
+                    userHistory.forEach(item => {
+                        const button = document.createElement('button');
+                        button.textContent = item.summary;
+                        button.classList.add('history-button'); // Add a class to the button for styling
+                        button.addEventListener('click', () => showPopup(item));
+                        historyList.appendChild(button);
+                    });
+                }
+        
+                // Function to show the popup window with details
+                function showPopup(historyItem) {
+                    const popup = document.getElementById('popup');
+                    const summary = document.getElementById('summary');
+                    const transcript = document.getElementById('transcript');
+                    const questions = document.getElementById('questions');
+        
+                    // Populate popup with details
+                    summary.textContent = historyItem.summary;
+                    transcript.textContent = historyItem.transcript;
+                    questions.textContent = historyItem.questions;
+        
+                    // Display the popup
+                    popup.style.display = 'block';
+                }
+        
+                // Function to close the popup window
+                function closePopup() {
+                    const popup = document.getElementById('popup');
+                    popup.style.display = 'none';
+                }
+        
+                // Function to export content of the popup window to PDF
+                function exportToPDF() {
+                    // Implement PDF export functionality here
+                    alert('Export to PDF functionality will be implemented here.');
+                }
+        
+                // Call the function to populate the sidebar with user history
+                populatesidebar();
+            </script>
+<div class="scroll-main-container">
 <div class="scroll-container">
-
     <h1>
         Summary
     </h1>
-    <style>
-        h1{
-           
-        }
-    </style>
+
+    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
+
+    One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
+    
+    Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
     <div id="summaryContent">    
     </div>
     <br>
     <h1>
         Transcript
     </h1>
+    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
+
+    One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
+    
+    Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
+    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
+
+One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
+
+Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
+The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
+
+One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
+
+Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
     <div id="transcriptContent">    
     </div>
-    <div id="Text">
 
+</div>
 
-    </div>
+<div class="dropdown">
+    <button class="dropbtn" onclick="toggleDropdown()">
+        Formal Summary
+    </button>
+    <button class="dropbtn" onclick="toggleDropdown()">
+        Informal Summary
+    </button>
+    <button class="dropbtn" onclick="toggleDropdown()">
+        Detailed Summary
+    </button>
+</div>
+<style>
+
+    .dropdown { padding: 10px; display: flex; gap: 10%;}
+    .dropbtn { width: 30%; background-color: #CD5C5C; color: white;
+     font-size: 16px; border: none; cursor: pointer;
+    }
+    .dropbtn:hover { background-color: #8B0000; }
+    
+</style>
+        <script>
+            function toggleDropdown() {
+                var dropdown = document.getElementById("myDropdown");
+                if (dropdown.style.display === "none" || dropdown.style.display === "") {
+                    dropdown.style.display = "block";
+                    document.addEventListener('click', closeDropdown);
+                } else {
+                    dropdown.style.display = "none";
+                    document.removeEventListener('click', closeDropdown);
+                }
+            }
+    
+            function closeDropdown(event) {
+                var dropdown = document.getElementById("myDropdown");
+                var button = document.querySelector('.dropbtn');
+                if (!dropdown.contains(event.target) && event.target !== button) {
+                    dropdown.style.display = "none";
+                    document.removeEventListener('click', closeDropdown);
+                }
+            }
+        </script>
+    
 </div>
 <script>
     // Retrieve the summary from localStorage
@@ -203,443 +256,267 @@
 </script>
 
 
-  <!-- Second scroll bar  -->
 
-  <style>
-    /* Style the container */ .scroll-container1 { padding: 10px 10px 20px; width: 670px; height: 50px;
-    overflow-y: auto; /* Enable vertical scrollbar */  
-     border-radius: 2%; background-color: #dddddd; padding:
-    10px; position: absolute; /* Add this line */ left: 37%; /* Position on
-    the left side */ top: 392px; /* Adjust as needed */ z-index: 5; bottom:
-    0; /* Adjust as needed */ /* Add this line */ } /* Style the scrollbar
-    */ .scrollbar { width: 20px; /* Width of the scrollbar */ background-color:
-    #5d4646; position: absolute; /* Add this line */ z-index: 5; }
-</style>
-<!-- <div class="scroll-container1">
-    <!-- Content goes here -->
-    <!-- You can put any content inside this div -->
-    
-    
 
-</div> -->
 
-    <!-- Second scroll bar end  -->
-<!--Dropdown button 1 -->
 <style>
-    .dropdown { z-index: 5;  position: relative; display: inline-block; } .dropdown-content
-    { display: none; position: absolute; background-color: #f9f9f9; min-width:
-    120px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); z-index: 1; } .dropdown-content
-    a { color: black;padding: 12px 15px; text-decoration: none; display: block;
-    } .dropdown-content a:hover { background-color: #f1f1f1; } .dropdown {
-    position: absolute; top: 420px; /* Adjust top position */ right: 1030px;
-    /* Adjust right position */ } .dropbtn { background-color: rgb(106, 106,
-    214); /* Change the background color of the button to blue */ color: white;
-     font-size: 16px; border: none; cursor: pointer;
-    }
-</style>
-    <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown()">
-            Type of Summery ▼
-        </button>
-        <div class="dropdown-content" id="myDropdown">
-            <a href="#">
-                Formal
-            </a>
-            <a href="#">
-                Informal
-            </a>
-            <a href="#">
-                More Details
-            </a>
-        </div>
-    </div>
-    <script>
-        function toggleDropdown() {
-            var dropdown = document.getElementById("myDropdown");
-            if (dropdown.style.display === "none" || dropdown.style.display === "") {
-                dropdown.style.display = "block";
-                document.addEventListener('click', closeDropdown);
-            } else {
-                dropdown.style.display = "none";
-                document.removeEventListener('click', closeDropdown);
-            }
-        }
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    width: 80%;
+    height: 100%;
+    left: 10%;
+}
 
-        function closeDropdown(event) {
-            var dropdown = document.getElementById("myDropdown");
-            var button = document.querySelector('.dropbtn');
-            if (!dropdown.contains(event.target) && event.target !== button) {
-                dropdown.style.display = "none";
-                document.removeEventListener('click', closeDropdown);
-            }
-        }
-    </script>
-    <!--Dropdown button end 1-->
-    <!--Dropdown button end 2-->
-    <style>
-        
-        .dropdown2 { z-index: 5; position: relative; display: inline-block; } .dropdown-content2
-        { display: none; position: absolute; background-color: #f9f9f9; min-width:
-        120px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); z-index: 1; } .dropdown-content2
-        a { color: black; padding: 12px 15px; text-decoration: none; display: block;
-        } .dropdown-content2 a:hover { background-color: #f1f1f1; } .dropdown2
-        { position: absolute; top: 420px; /* Adjust top position */ right: 900px;
-        /* Adjust right position */ } .dropbtn2 { background-color: rgb(106, 106,
-        214); /* Change the background color of the button to blue */ color: white;
-        padding: 10px 30px ; font-size: 16px; border: none; cursor: pointer;
-        }
-    </style>
+.mcq {
+    margin-top: 50px;
+    margin-left: 20px;
+    position: relative;
+}
 
-        <div class="dropdown2">
-            <button class="dropbtn2" onclick="toggleDropdown2()">
-                Topic ▼
-            </button>
-            <div class="dropdown-content2" id="myDropdown2">
-                <a href="#">
-                    Topic Summary
-                </a>
-                <a href="#">
-                    Key Point
-                </a>
-                <a href="#">
-                    Conclusion Summary
-                </a>
-            </div>
-        </div>
-        <script>
-            function toggleDropdown2() {
-                var dropdown2 = document.getElementById("myDropdown2");
-                if (dropdown2.style.display === "none" || dropdown2.style.display === "") {
-                    dropdown2.style.display = "block";
-                    document.addEventListener('click', closeDropdown);
-                } else {
-                    dropdown2.style.display = "none";
-                    document.removeEventListener('click', closeDropdown);
-                }
-            }
-
-            function closeDropdown(event) {
-                var dropdown2 = document.getElementById("myDropdown2");
-                var button = document.querySelector('.dropbtn2');
-                if (!dropdown2.contains(event.target) && event.target !== button) {
-                    dropdown2.style.display = "none";
-                    document.removeEventListener('click', closeDropdown);
-                }
-            }
-        </script>
-        <!--Dropdown button end 2-->
-        <!--Dropdown button end 3-->
-        <style>
-            .dropdown3 {  z-index: 5; position: relative; display: inline-block; } .dropdown-content3
-            { display: none; position: absolute; background-color: #f9f9f9; min-width:
-            120px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); z-index: 1; } .dropdown-content3
-            a { color: black;text-align: center; padding: 12px 15px; text-decoration: none; display: block;
-            } .dropdown-content3 a:hover { background-color: #f1f1f1; } .dropdown3
-            { position: absolute; top: 420px; /* Adjust top position */ right: 700px;
-            /* Adjust right position */ } .dropbtn3 { background-color: rgb(106, 106,
-            214); /* Change the background color of the button to blue */ color: white;
-            padding: 10px 6px; font-size: 16px; border: none; cursor: pointer; }
-        </style>
-
-            <div class="dropdown3">
-                <button class="dropbtn3" onclick="toggleDropdown3()">
-                    Number Of Paragraph ▼
-                </button>
-                <div class="dropdown-content3" id="myDropdown3">
-                    <a href="#">
-                        1
-                    </a>
-                    <a href="#">
-                        2
-                    </a>
-                    <a href="#">
-                        3
-                    </a>
-                </div>
-            </div>
-            <script>
-                function toggleDropdown3() {
-                    var dropdown3 = document.getElementById("myDropdown3");
-                    if (dropdown3.style.display === "none" || dropdown3.style.display === "") {
-                        dropdown3.style.display = "block";
-                        document.addEventListener('click', closeDropdown);
-                    } else {
-                        dropdown3.style.display = "none";
-                        document.removeEventListener('click', closeDropdown);
-                    }
-                }
-
-                function closeDropdown(event) {
-                    var dropdown3 = document.getElementById("myDropdown3");
-                    var button = document.querySelector('.dropbtn3');
-                    if (!dropdown3.contains(event.target) && event.target !== button) {
-                        dropdown3.style.display = "none";
-                        document.removeEventListener('click', closeDropdown);
-                    }
-                }
-            </script>
-            
-               
-              <!-- send button -->
-
-
-            <div class="dropdown4">
-                <button class="dropbtn" >
-                    <i class="fas fa-paper-plane"></i> Send
-                </button>
-               
-                </div>
-            </div>
-            <script>
-   
-            </script>
-              <style>
-                .dropdown4 {  z-index: 5; position: relative; display: inline-block; } .dropdown-content3
-                { display: none; position: absolute; background-color: #f9f9f9; min-width:
-                120px; box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); z-index: 1; } .dropdown-content3
-                a { color: black; padding: 15px 0px; text-decoration: none; display: block;
-                } .dropdown-content4 a:hover { background-color: #f1f1f1; } .dropdown4
-                { position: absolute; top: 420px; /* Adjust top position */ right: 530px;
-                /* Adjust right position */ } .dropbtn4 { background-color: rgb(106, 106,
-                214); /* Change the background color of the button to blue */ color: white;
-                padding: 12px 18px 2px; font-size: 16px; border: none; cursor: pointer; }
-            </style>
-
-              <!--mcq send button -->
-
-
-
- <!-- MCQ Section  -->
-
-            
-  <title>Chat Interface</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      position: absolute;
-      top: 500px; /* Adjust top position as needed */
-      left: 250px; /* Adjust left position as needed */
-      display: flex;
-      flex-direction: column;
-    }
-
-    .messages {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-
-    .message {
-      background-color: #f2f2f2;
-      border-radius: 5px;
-      padding: 20px;
-      margin-bottom: 10px;
-      width: 1200px;
-    }
-
-    .message.user {
-      align-self: flex-end;
-      background-color: #5a5858;
-      color: rgb(255, 89, 0);
-    }
-    .message.User.right    {
-      align-self: flex-end;
-      background-color: #5a5858;
-      color:rgb(4, 255, 0);
-    }
-
-    .message.user::after {
-      
-      position: absolute;
-      border-style: solid;
-      border-width: 10px 15px 10px 0;
-      border-color: transparent #0084ff transparent transparent;
-      top: 50%;
-      right: -15px;
-      margin-top: -10px;
-    }
-
-    .message.bot::before {
-    
-      position: absolute;
-      border-style: solid;
-      border-width: 10px 0 10px 15px;
-      border-color: transparent transparent transparent #f2f2f2;
-      top: 50%;
-      left: -15px;
-      margin-top: -10px;
-    }
-  </style>
-</head>
-
-<head>
-    <style>
-        .container {
-            position:relative;
-            top: 450px;
-            left: -550px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-            width: 1000px;
-            height: 25px;
-        }
-
-        #generateMCQsButton {
-    padding: 10px 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.3s ease; /* Adding smooth transition */
-    background-color: #CD5C5C;
+#generateMCQsButton {
+        position: relative;
+padding: 10px 30px;
+font-size: 16px;
+left: center;
+cursor: pointer;
+transition: transform 0.3s ease; /* Adding smooth transition */
+background-color: #CD5C5C;
 
 }
 
 #generateMCQsButton:hover {
-    transform: scale(1.1); /* Increase size by 10% on hover */
-
+    transform: scale(1.1); /* Scale button on hover */
 }
 
-        .mcq {
-            margin-top: 20px;
-            margin-left: -300px;
+.option {
+    padding: 10px;
+    margin: 5px;
+    width: 60%;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333; /* Dark text color */
+}
 
-        }
+.option:hover {
+    background-color: #e0e0e0; /* Light gray background on hover */
+    color: #000;
+}
+.correct {
+    background-color: #7ebf7e; /* Light green background for correct answer */
+    color: #fff; /* White text color for correct answer */
+}
 
-        .option {
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-      background-color: #5a5858;
+.wrong {
+    background-color: #ff9999; /* Light red background for wrong answer */
+    color: #fff; /* White text color for wrong answer */
+}
 
-        }
+.explanation {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    height: 100px;
+    left: 62%; /* Position explanation to the right of options */
+    padding: 5px;
+    background-color: #fff; /* White background */
+    border: 1px solid #ccc; /* Gray border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    z-index: 1; /* Ensure explanation appears above options */
+}
 
-        .correct {
-            background-color: lightgreen;
-        }
+</style>
 
-        .wrong {
-            background-color: lightcoral;
-        }
 
-        .mcq-container {
-            margin-top: 50px;
-            padding: 20px;
-            border: 1px solid var(--color-border2);
-            border-radius: 10px;
-            background-color: var(--color-main);
-            box-shadow: var(--color-main) 0 0 50px;
+<div class="container">
+    <!-- Add the "Generate MCQs" button -->
+    <button id="generateMCQsButton">Generate&nbsp;MCQs</button>
+    <p id="progressCounter">Progress: 0 / ${mockMCQData.length}</p>
+    <div id="mcqsContainer"></div>
+</div>
+
+
+
+<!--
+<script>
+    // Function to generate MCQs dynamically
+    function generateMCQs() {
+        // Retrieve MCQ doptionKeyata from localStorage
+        const mcqData = JSON.parse(localStorage.getItem('mcqData'));
+        const mcqsContainer = document.getElementById('mcqsContainer');
+        
+        // Clear previous MCQs if any
+        mcqsContainer.innerHTML = '';
+
+        // Loop through MCQ data and create HTML elements for each question
+        mcqData.forEach((mcq, index) => {
+            const mcqDiv = document.createElement('div');
+            mcqDiv.classList.add('mcq-question');
+            mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
             
-       
-        }
+            // Loop through options and create HTML buttons for each option
+            Object.keys(mcq.options).forEach(optionKey => {
+                const optionButton = document.createElement('button');
+                optionButton.classList.add('option');
+                optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
 
-        .mcq-question {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-
-        }
-
-        .mcq-options {
-            display: flex;
-            flex-direction: column;
-
-        }
-
-        .mcq-option {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid var(--color-border1);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-        }
-
-        .mcq-option:hover {
-            background-color: var(--color-button-hover);
-        }
-
-        .mcq-explanation {
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-
-
-    </style>
-</head>
-
-
-<body>
-    <div class="container">
-        <!-- Add the "Generate MCQs" button -->
-        <button id="generateMCQsButton">Generate&nbsp;MCQs</button>
-        <!-- Container to display MCQs -->
-        <div id="mcqsContainer"></div>
-    </div>
-
-    <script>
-        // Function to generate MCQs dynamically
-        function generateMCQs() {
-            // Retrieve MCQ data from localStorage
-            const mcqData = JSON.parse(localStorage.getItem('mcqData'));
-            const mcqsContainer = document.getElementById('mcqsContainer');
-            
-            // Clear previous MCQs if any
-            mcqsContainer.innerHTML = '';
-
-            // Loop through MCQ data and create HTML elements for each question
-            mcqData.forEach((mcq, index) => {
-                const mcqDiv = document.createElement('div');
-                mcqDiv.classList.add('mcq');
-                mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
-                
-                // Loop through options and create HTML buttons for each option
-                Object.keys(mcq.options).forEach(optionKey => {
-                    const optionButton = document.createElement('button');
-                    optionButton.classList.add('option');
-                    optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
-
-                    // Add click event listener to check answer and apply color
-                    optionButton.addEventListener('click', () => {
-                        // Remove color from all options
-                        const allOptions = mcqDiv.querySelectorAll('.option');
-                        allOptions.forEach(option => {
-                            option.classList.remove('correct', 'wrong');
-                        });
-
-                        // Apply color based on selected option
-                        if (optionKey === mcq.answer) {
-                            optionButton.classList.add('correct');
-                        } else {
-                            optionButton.classList.add('wrong');
-                        }
+                // Add click event listener to check answer and apply color
+                optionButton.addEventListener('click', () => {
+                    // Remove color from all options
+                    const allOptions = mcqDiv.querySelectorAll('.option');
+                    allOptions.forEach(option => {
+                        option.classList.remove('correct', 'wrong');
                     });
 
-                    mcqDiv.appendChild(optionButton);
+                    // Apply color based on selected option
+                    if (optionKey === mcq.answer) {
+                        optionButton.classList.add('correct');
+                    } else {
+                        optionButton.classList.add('wrong');
+                    }
                 });
 
-                // Add explanation below options
-                const explanationDiv = document.createElement('div');
-                explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
-                mcqDiv.appendChild(explanationDiv);
-
-                // Append MCQ div to container
-                mcqsContainer.appendChild(mcqDiv);
+                mcqDiv.appendChild(optionButton);
             });
-        }
 
-        // Add click event listener to the "Generate MCQs" button
-        document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
-    </script>
+            // Add explanation below options
+            const explanationDiv = document.createElement('div');
+            explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
+            mcqDiv.appendChild(explanationDiv);
+
+            // Append MCQ div to container
+            mcqsContainer.appendChild(mcqDiv);
+        });
+    }
+
+    // Add click event listener to the "Generate MCQs" button
+    document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
+</script>
+-->
+
+
+<script>
+// Sample MCQ data for testing
+const mockMCQData = [
+{
+                    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?",
+                    options: {
+                        "A": "Option A: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "B": "Option B: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "C": "Option C: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "D": "Option D: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    },
+                    answer: "B",
+                    explanation: "This is the explanation for why Option B is the correct answer."
+                },
+                {
+                    question: "Lorem ipsum dolor sit amet, lor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?",
+                    options: {
+                        "A": "Option A: or sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "B": "Option B: it amet, consectetur adipiscing elit.",
+                        "C": "Option C:ectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "D": "Option D: Lorem it, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    },
+                    answer: "B",
+                    explanation: "This is the explanation for why Option B is the correct answer."
+                },
+                {
+                    question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dolore magna aliqua?",
+                    options: {
+                        "A": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                        "B": "Option B: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "C": "Option C: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                        "D": "Option D: Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    },
+                    answer: "B",
+                    explanation: "This is the explanation for why Option B is the correct answer."
+                },
+    // Add more sample MCQs as needed
+];
+
+// Function to generate MCQs dynamically
+// Function to generate MCQs dynamically
+function generateMCQs() {
+    const mcqsContainer = document.getElementById('mcqsContainer');
+    const progressCounter = document.getElementById('progressCounter');
+
+    // Clear previous MCQs if any
+    mcqsContainer.innerHTML = '';
+    mcqsContainer.classList.add('mcq-container');
+
+    // Initialize answered counter
+    let answeredCount = 0;
+
+    // Loop through mock MCQ data and create HTML elements for each question
+    mockMCQData.forEach((mcq, index) => {
+        const mcqDiv = document.createElement('div');
+        mcqDiv.classList.add('mcq');
+        mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
+
+        // Loop through options and create HTML buttons for each option
+        Object.keys(mcq.options).forEach(optionKey => {
+            const optionButton = document.createElement('button');
+            optionButton.classList.add('option');
+            optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
+
+            // Add click event listener to check answer and apply color
+            optionButton.addEventListener('click', () => {
+                // Remove color from all options
+                const allOptions = mcqDiv.querySelectorAll('.option');
+                allOptions.forEach(option => {
+                    option.classList.remove('correct', 'wrong');
+                });
+
+                // Apply color based on selected option
+                if (optionKey === mcq.answer) {
+                    optionButton.classList.add('correct');
+                    // Increment answered counter if correct option selected
+                    if (!mcq.answered) {
+                        answeredCount++;
+                        mcq.answered = true;
+                    }
+                } else {
+                    optionButton.classList.add('wrong');
+                }
+
+                // Update progress counter
+                progressCounter.textContent = `Progress: ${answeredCount} / ${mockMCQData.length}`;
+                mcqDiv.querySelector('.explanation').style.display = 'block';
+            });
+
+            mcqDiv.appendChild(optionButton);
+        });
+
+        // Add explanation below options
+        const explanationDiv = document.createElement('div');
+        explanationDiv.classList.add('explanation');
+        explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
+        mcqDiv.appendChild(explanationDiv);
+
+        // Append MCQ div to container
+        mcqsContainer.appendChild(mcqDiv);
+    });
+}
+
+// Add click event listener to the "Generate MCQs" button
+document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
+
+// Initially generate MCQs on page load
+generateMCQs();
+
+</script>
+
+
+
+
+</div>
+
 </body>
-
-
-
+<script src="script.js">
+</script>
 </html>
 
 
