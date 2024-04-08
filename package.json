@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -21,5 +21,14 @@
     "mysql2": "^3.0.0",
     "nodemon": "^3.1.0",
     "youtube-captions-scraper": "^2.0.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/*.test.js",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

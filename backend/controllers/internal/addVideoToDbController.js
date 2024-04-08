@@ -82,7 +82,6 @@ exports.addVideoToDb = async (req, res) => {
         ...responseData,
         transcript: videoTranscript,
         summary: summaryToSend,
-        HI: "hi",
         informal_summary: informal_summary_to_send,
         detailed_summary: detailed_summary_to_send,
         mcq: questionsData,
@@ -97,6 +96,7 @@ exports.addVideoToDb = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       error: "Internal Server Error in Add video to db controller ",
+      error_id: "345",
       message: error.message,
     });
   }
