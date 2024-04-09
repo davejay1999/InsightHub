@@ -75,9 +75,12 @@ form input:valid ~ button{
 
 
 .wrapper {
-  border: 4px dotted rgb(195, 32, 32);
+  border: 3px dotted rgb(195, 32, 32);
   padding: 15px;
-  border-collapse: separate;
+  width: auto;
+  height: auto;
+  position: relative;
+  left: 34%;
 }
 
 .button-container {
@@ -87,6 +90,7 @@ form input:valid ~ button{
 
 #uploadButton1 {
   position: relative;
+  left: 34%;
   text-align: center;
   width: 155px;
   height: 50px;
