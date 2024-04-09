@@ -9,208 +9,194 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<title>Insight Hub</title>
 	</head>
-	<body>
-		<nav id="sidebar">
-			<div class="float-top">
-				<div class="sidebar-controls">
-					<button class="new-chat" onclick="window.location.href = 'Upload with url.html';">
-						<i class="fa fa-plus"></i>
-						New Summary
-					</button>
-									</div>
-				<ul class="conversations">
-					<li class="active">
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<br><br>
-					<li class="grouping">Old Chat</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a very super long conversation title that doesn't fit</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li class="grouping"></li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-					<li>
-						<button class="conversation-button"><i class="fa fa-message fa-regular"></i> This is a conversation title</button>
-						<div class="fade"></div>
-						<div class="edit-buttons">
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="user-menu">
-				<button id="logoutButton"><i class="fa fa-sign-out"></i> Logout</button>
-			</div>
-		</nav>
-		<main>
-		</div>
-		<div class="logo3">
-			<br>
-			Insight Hub
-		</div>
-		</div>
-		</head>
-		<div class="wrapper">
-			<header>
-				<h1>Video URL</h1>
-			</header>
-			<form action="#">
-				<input type="url" id="videoUrlInput" placeholder="Paste Video URL" required>
-			</form>
-			<div class="button-container">
-				<button id="uploadButton1" type="button" onclick="redirectToAnotherPage()">Upload</button>
-				<img src="spinner.gif" alt="Loading Spinner" id="loading-spinner" style="display: none;">
-			</div>
-		</div>
+
+
+
+
+	<body>   
+		<div class="child1">
+			<nav id="sidebar">
+				<div class="float-top">
+					<div class="sidebar-controls">
+						<button class="new-chat" onclick="window.location.href = 'Upload with url.html';">
+							<i class="fa fa-plus"></i>
+							New Summary
+						</button>
+						
+					</div>
 		
-  
-  
-  
-		<style>
-			.wrapper {
-			border: 4px dotted rgb(195, 32, 32); /* This adds a dotted border around the .wrapper */
-			padding: 15px; /* Optional: Add some padding inside the border */
-			border-collapse: separate;
-			top: 100px;
-			height: 250px;
-			}
-			#uploadButton1 {
-			text-align: center;
-			position: relative;
-      top: 20px;
-      left: 165px;
-			width: 155px;
-			height: 50px;
-			background-color: #CD5C5C;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 16px;
-			}
-			#uploadButton1:hover {
-			background-color: #df808d;
-			}    
-      #loading-spinner {
-  margin-left: 10px; /* Adjust margin as needed */
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Adjust size as needed */
-}  
-		</style>
-		<!-- upload -->
-		<div class="wrapper1" id="fileDropArea" ondragover="handleDragOver(event);" ondragleave="handleDragLeave(event);" ondrop="handleDrop(event);">
-			<header>
-				<h1>File Uploader</h1>
-				<p id="fileInstructions">Drag & drop any file here<br>or click here to browse files from your device</p>
-				<i class="fa fa-upload" style="font-size:50px"></i>
+					<ul class="conversations" id="historyList">
+						<!-- History items will be dynamically added here -->
+					</ul>
+		
+		
+				</div>
+				<div class="user-menu">
+					<button id="logoutButton">
+						<i class="fa fa-sign-out">
+						</i>
+						Logout
+					</button>
+				</div>
+			</nav>
+		</div> 
+		
+
+		<div class="child2">
+			<h2 class="InsightHub">
+				Insight Hub
+			</h2>
+			<style>
+				.InsightHub {
+					text-align: center;
+					font-size: 30px;
+					font-weight: bold;
+					color: #333;
+					margin-top: 20px;
+				}
+			</style>
+			<div id="popup" class="popup">
+				<div class="popup-content">
+					<h2>Summary</h2>
+					<div id="summary"></div>
+				</div>
+				<div class="popup-content">
+					<h2>Questions</h2>
+					<div id="questions"></div>
+				</div>
+				<div class="popup-content">
+					<h2>Transcript</h2>
+					<div id="transcript"></div>
+				</div>
+		
+				<button class="close-btn" onclick="closePopup()">Close</button>
+				<button class="pdf-btn"onclick="exportToPDF()">Export to PDF</button>
+			</div>
+					
+					<script>
+						// Fetch user history data from API
+						async function fetchUserHistory() {
+							try {
+							    const token = localStorage.getItem('token');
+							    const response = await fetch("http://3.90.66.68:3000/user/action/getSummary", {
+							        method: "POST",
+							        headers: {
+							            "Content-Type": "application/json",
+							            "Authorization": `Bearer ${token}`
+							        },
+							        body: requestBody
+							    });
+							    const data = await response.json();
+							    return data;
+							} catch (error) {
+							    console.error('Error fetching user history:', error);
+							}
+							return [];
+				
+							// const data = [
+							// 	{
+							// 		summary: 'User history item 1',
+							// 		transcript: 'Transcript for user history item 1',
+							// 		questions: 'Questions for user history item 1'
+							// 	},
+							// 	{
+							// 		summary: 'User history item 2',
+							// 		transcript: 'Transcript for user history item 2',
+							// 		questions: 'Questions for user history item 2'
+							// 	},
+							// 	{
+							// 		summary: 'User history item 3',
+							// 		transcript: 'Transcript for user history item 3',
+							// 		questions: 'Questions for user history item 3'
+							// 	}
+							// ];
+							// return data;
+						}
+				
+						// Function to populate sidebar with user history
+						async function populatesidebar() {
+							const historyList = document.getElementById('historyList');
+							const userHistory = await fetchUserHistory();
+				
+							// Clear existing list items
+							historyList.innerHTML = '';
+				
+							userHistory.forEach(item => {
+								const button = document.createElement('button');
+								button.textContent = item.summary;
+								button.classList.add('history-button'); // Add a class to the button for styling
+								button.addEventListener('click', () => showPopup(item));
+								historyList.appendChild(button);
+							});
+						}
+				
+						// Function to show the popup window with details
+						function showPopup(historyItem) {
+							const popup = document.getElementById('popup');
+							const summary = document.getElementById('summary');
+							const transcript = document.getElementById('transcript');
+							const questions = document.getElementById('questions');
+				
+							// Populate popup with details
+							summary.textContent = historyItem.summary;
+							transcript.textContent = historyItem.transcript;
+							questions.textContent = historyItem.questions;
+				
+							// Display the popup
+							popup.style.display = 'block';
+						}
+				
+						// Function to close the popup window
+						function closePopup() {
+							const popup = document.getElementById('popup');
+							popup.style.display = 'none';
+						}
+				
+						function exportToPDF() {
+							// Initialize jsPDF
+							const doc = new jsPDF();
+		
+							// Get the content of the popup window
+							const summary = document.getElementById('summary').textContent;
+							const transcript = document.getElementById('transcript').textContent;
+							const questions = document.getElementById('questions').textContent;
+		
+							// Add content to the PDF document
+							doc.text(`Summary: ${summary}`, 10, 10);
+							doc.text(`Transcript: ${transcript}`, 10, 20);
+							doc.text(`Questions: ${questions}`, 10, 30);
+							const currentTime = new Date();
+							const timeString = `${currentTime.getFullYear()}_${currentTime.getMonth() + 1}_${currentTime.getDate()}_${currentTime.getHours()}_${currentTime.getMinutes()}_${currentTime.getSeconds()}`;
+		
+							// Save the PDF
+							doc.save(`user_history_${timeString}.pdf`);                
+						}
+		
+				
+						// Call the function to populate the sidebar with user history
+						populatesidebar();
+					</script>
+
+			<div class="wrapper">
+				<header>
+					<h1>Video URL</h1>
+				</header>
 				<form action="#">
-					<br>
+					<input type="url" id="videoUrlInput" placeholder="Paste Video URL" required>
 				</form>
-				<input type="file" id="fileInput" style="display: none;">
-			</header>
-      <button id="uploadButton2" onclick="redirectToAnotherPage()">Upload</button>
-		<style>
+				<div class="button-container">
+					<button id="uploadButton1" type="button" onclick="redirectToAnotherPage()">Upload</button>
+					<img src="spinner.gif" alt="Loading Spinner" id="loading-spinner" style="display: none;">
+				</div>
+			</div>
 
-			#uploadButton2 {
-			text-align: center;
-			position: relative;
-            top: -42px;
-            left: 165px;
-			width: 155px;
-			height: 50px;
-			background-color: #CD5C5C;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 16px;
-			}
-			#uploadButton2:hover {
-			background-color: #df808d;
-			}
-		</style>
-		</div>
-		<style>
-			.wrapper1 {
-			border: 4px dotted rgb(195, 32, 32); /* This adds a dotted border around the .wrapper */
-			padding: 13px; /* Optional: Add some padding inside the border */
-			border-collapse: separate;
-			top: -290px;
-			}
-		</style>
-
-		<style>
-			#uploadButton {
-			text-align: center;
-			position: relative;
-      top: auto;
-      left: auto;
-			width: 155px;
-			height: 50px;
-			background-color: #CD5C5C;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 16px;
-			}
-			#uploadButton:hover {
-			background-color: #df808d;;
-			}
-		</style>
+	</body>
+	<script src="script.js">
+			
+	</script>
 
 
-    <script src="script.js"></script>
-</body>
+
+
+
 </html>

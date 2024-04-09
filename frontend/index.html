@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
     <br>
     <title>
         Insight Hub
@@ -82,32 +83,41 @@
             <script>
                 // Fetch user history data from API
                 async function fetchUserHistory() {
-                    // try {
-                    //     const response = await fetch('your_api_endpoint_here');
-                    //     const data = await response.json();
-                    //     return data;
-                    // } catch (error) {
-                    //     console.error('Error fetching user history:', error);
-                    // }
+                    try {
+                        const token = localStorage.getItem('token');
+                        const response = await fetch("http://3.90.66.68:3000/user/action/getSummary", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
+                            },
+                            body: requestBody
+                        });
+                        const data = await response.json();
+                        return data;
+                    } catch (error) {
+                        console.error('Error fetching user history:', error);
+                    }
+                    return [];
         
-                    const data = [
-                        {
-                            summary: 'User history item 1',
-                            transcript: 'Transcript for user history item 1',
-                            questions: 'Questions for user history item 1'
-                        },
-                        {
-                            summary: 'User history item 2',
-                            transcript: 'Transcript for user history item 2',
-                            questions: 'Questions for user history item 2'
-                        },
-                        {
-                            summary: 'User history item 3',
-                            transcript: 'Transcript for user history item 3',
-                            questions: 'Questions for user history item 3'
-                        }
-                    ];
-                    return data;
+                    // const data = [
+                    //     {
+                    //         summary: 'User history item 1',
+                    //         transcript: 'Transcript for user history item 1',
+                    //         questions: 'Questions for user history item 1'
+                    //     },
+                    //     {
+                    //         summary: 'User history item 2',
+                    //         transcript: 'Transcript for user history item 2',
+                    //         questions: 'Questions for user history item 2'
+                    //     },
+                    //     {
+                    //         summary: 'User history item 3',
+                    //         transcript: 'Transcript for user history item 3',
+                    //         questions: 'Questions for user history item 3'
+                    //     }
+                    // ];
+                    // return data;
                 }
         
                 // Function to populate sidebar with user history
@@ -149,11 +159,26 @@
                     popup.style.display = 'none';
                 }
         
-                // Function to export content of the popup window to PDF
                 function exportToPDF() {
-                    // Implement PDF export functionality here
-                    alert('Export to PDF functionality will be implemented here.');
+                    // Initialize jsPDF
+                    const doc = new jsPDF();
+
+                    // Get the content of the popup window
+                    const summary = document.getElementById('summary').textContent;
+                    const transcript = document.getElementById('transcript').textContent;
+                    const questions = document.getElementById('questions').textContent;
+
+                    // Add content to the PDF document
+                    doc.text(`Summary: ${summary}`, 10, 10);
+                    doc.text(`Transcript: ${transcript}`, 10, 20);
+                    doc.text(`Questions: ${questions}`, 10, 30);
+                    const currentTime = new Date();
+                    const timeString = `${currentTime.getFullYear()}_${currentTime.getMonth() + 1}_${currentTime.getDate()}_${currentTime.getHours()}_${currentTime.getMinutes()}_${currentTime.getSeconds()}`;
+
+                    // Save the PDF
+                    doc.save(`user_history_${timeString}.pdf`);                
                 }
+
         
                 // Call the function to populate the sidebar with user history
                 populatesidebar();
@@ -196,14 +221,14 @@ Despite its strengths, the USA faces challenges such as social inequality, polit
 </div>
 
 <div class="dropdown">
-    <button class="dropbtn" onclick="toggleDropdown()">
-        Formal Summary
-    </button>
-    <button class="dropbtn" onclick="toggleDropdown()">
+    <button class="dropbtn" onclick="informalSummaryData()">
         Informal Summary
     </button>
-    <button class="dropbtn" onclick="toggleDropdown()">
+    <button class="dropbtn" onclick="detailedSummaryData()">
         Detailed Summary
+    </button>
+    <button class="dropbtn" onclick="formalSummaryData()">
+        Formal Summary
     </button>
 </div>
 <style>
@@ -216,25 +241,7 @@ Despite its strengths, the USA faces challenges such as social inequality, polit
     
 </style>
         <script>
-            function toggleDropdown() {
-                var dropdown = document.getElementById("myDropdown");
-                if (dropdown.style.display === "none" || dropdown.style.display === "") {
-                    dropdown.style.display = "block";
-                    document.addEventListener('click', closeDropdown);
-                } else {
-                    dropdown.style.display = "none";
-                    document.removeEventListener('click', closeDropdown);
-                }
-            }
-    
-            function closeDropdown(event) {
-                var dropdown = document.getElementById("myDropdown");
-                var button = document.querySelector('.dropbtn');
-                if (!dropdown.contains(event.target) && event.target !== button) {
-                    dropdown.style.display = "none";
-                    document.removeEventListener('click', closeDropdown);
-                }
-            }
+
         </script>
     
 </div>
@@ -243,6 +250,7 @@ Despite its strengths, the USA faces challenges such as social inequality, polit
     const summary = localStorage.getItem('summaryData');
     // Display the summary in the designated HTML element
     const summaryContent = document.getElementById('summaryContent');
+
     summaryContent.textContent = summary;
 
     // Retrieve the transcript from localStorage
@@ -252,7 +260,23 @@ Despite its strengths, the USA faces challenges such as social inequality, polit
     transcriptContent.textContent = transcript;
     console.log(transcript);
 
+    function informalSummaryData() {
+    const summary = localStorage.getItem('informalSummaryData');
+    summaryContent.textContent = summary;
 
+    }
+
+    function detailedSummaryData() {
+        const summary = localStorage.getItem('detailedSummaryData');
+        summaryContent.textContent = summary;
+
+    }
+
+    function formalSummaryData() {
+    const summary = localStorage.getItem('summaryData');
+    summaryContent.textContent = summary;
+
+    }
 </script>
 
 
@@ -334,7 +358,7 @@ background-color: #CD5C5C;
 <div class="container">
     <!-- Add the "Generate MCQs" button -->
     <button id="generateMCQsButton">Generate&nbsp;MCQs</button>
-    <p id="progressCounter">Progress: 0 / ${mockMCQData.length}</p>
+    <p id="progressCounter"></p>
     <div id="mcqsContainer"></div>
 </div>
 
@@ -442,6 +466,7 @@ const mockMCQData = [
 function generateMCQs() {
     const mcqsContainer = document.getElementById('mcqsContainer');
     const progressCounter = document.getElementById('progressCounter');
+    progressCounter.textContent = `Progress: 0 / ${mockMCQData.length}`;
 
     // Clear previous MCQs if any
     mcqsContainer.innerHTML = '';
@@ -516,7 +541,9 @@ generateMCQs();
 
 </body>
 <script src="script.js">
+    
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 </html>
 
 

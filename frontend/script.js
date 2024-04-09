@@ -3,15 +3,7 @@ const hide_sidebar = document.querySelector(".hide-sidebar");
 const new_chat_button = document.querySelector(".new-chat");
 
 
-fetch('navbar.html')
-    .then(response => response.text())
-    .then(data => {
-        // Inject the fetched content into the 'includedContent' div
-        document.getElementById('includedContent').innerHTML = data;
-    })
-    .catch(error => {
-        console.error('Error fetching included HTML:', error);
-    });
+
 
 
 // Function to handle logout
@@ -102,6 +94,8 @@ function redirectToAnotherPage() {
             const summaryQueryParam = encodeURIComponent(data.summary);
             // Store the summary data in localStorage
             localStorage.setItem('summaryData', JSON.stringify(data.summary));
+            localStorage.setItem('informalSummaryData', JSON.stringify(data.informal_summary));
+            localStorage.setItem('detailedSummaryData', JSON.stringify(data.detailed_summary));
             localStorage.setItem('transcriptData', JSON.stringify(data.transcript));
             
 
