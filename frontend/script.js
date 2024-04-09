@@ -1,3 +1,7 @@
+
+
+
+
 const sidebar = document.querySelector("#sidebar");
 const hide_sidebar = document.querySelector(".hide-sidebar");
 const new_chat_button = document.querySelector(".new-chat");
@@ -42,16 +46,16 @@ function handleDrop(event) {
     handleFiles(files);
 }
 
-// Function to handle file input change event
-document.getElementById('fileDropArea').addEventListener('click', () => {
-    document.getElementById('fileInput').click();
-});
+// // Function to handle file input change event
+// document.getElementById('fileDropArea').addEventListener('click', () => {
+//     document.getElementById('fileInput').click();
+// });
 
-// Function to handle file input change event
-document.getElementById('fileInput').addEventListener('change', (event) => {
-    const files = event.target.files;
-    handleFiles(files);
-});
+// // Function to handle file input change event
+// document.getElementById('fileInput').addEventListener('change', (event) => {
+//     const files = event.target.files;
+//     handleFiles(files);
+// });
 
 // Function to handle files
 function handleFiles(files) {
@@ -179,3 +183,5 @@ document.querySelectorAll(".conversation-button").forEach(button => {
         show_view(".conversation-view");
     });
 });
+
+

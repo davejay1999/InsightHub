@@ -95,10 +95,12 @@
                         });
                         const data = await response.json();
                         return data;
+                        
                     } catch (error) {
                         console.error('Error fetching user history:', error);
+                        // return [];
                     }
-                    return [];
+                    
         
                     // const data = [
                     //     {
@@ -188,33 +190,12 @@
     <h1>
         Summary
     </h1>
-
-    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-
-    One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-    
-    Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
-    <div id="summaryContent">    
+   <div id="summaryContent">    
     </div>
     <br>
     <h1>
         Transcript
     </h1>
-    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-
-    One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-    
-    Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
-    The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-
-One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-
-Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
-The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-
-One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-
-Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
     <div id="transcriptContent">    
     </div>
 
@@ -357,71 +338,86 @@ background-color: #CD5C5C;
 
 <div class="container">
     <!-- Add the "Generate MCQs" button -->
-    <button id="generateMCQsButton">Generate&nbsp;MCQs</button>
+    <button id="generateMCQsButton" onclick="generateMCQs()">Generate&nbsp;MCQs</button>
     <p id="progressCounter"></p>
     <div id="mcqsContainer"></div>
 </div>
 
 
 
-<!--
 <script>
     // Function to generate MCQs dynamically
     function generateMCQs() {
         // Retrieve MCQ doptionKeyata from localStorage
         const mcqData = JSON.parse(localStorage.getItem('mcqData'));
         const mcqsContainer = document.getElementById('mcqsContainer');
-        
-        // Clear previous MCQs if any
-        mcqsContainer.innerHTML = '';
+        progressCounter.textContent = `Progress: 0 / ${mcqData.length}`;
 
-        // Loop through MCQ data and create HTML elements for each question
-        mcqData.forEach((mcq, index) => {
-            const mcqDiv = document.createElement('div');
-            mcqDiv.classList.add('mcq-question');
-            mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
-            
-            // Loop through options and create HTML buttons for each option
-            Object.keys(mcq.options).forEach(optionKey => {
-                const optionButton = document.createElement('button');
-                optionButton.classList.add('option');
-                optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
+// Clear previous MCQs if any
+mcqsContainer.innerHTML = '';
+mcqsContainer.classList.add('mcq-container');
 
-                // Add click event listener to check answer and apply color
-                optionButton.addEventListener('click', () => {
-                    // Remove color from all options
-                    const allOptions = mcqDiv.querySelectorAll('.option');
-                    allOptions.forEach(option => {
-                        option.classList.remove('correct', 'wrong');
-                    });
+// Initialize answered counter
+let answeredCount = 0;
 
-                    // Apply color based on selected option
-                    if (optionKey === mcq.answer) {
-                        optionButton.classList.add('correct');
-                    } else {
-                        optionButton.classList.add('wrong');
-                    }
-                });
+// Loop through mock MCQ data and create HTML elements for each question
+mcqData.forEach((mcq, index) => {
+    const mcqDiv = document.createElement('div');
+    mcqDiv.classList.add('mcq');
+    mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
 
-                mcqDiv.appendChild(optionButton);
+    // Loop through options and create HTML buttons for each option
+    Object.keys(mcq.options).forEach(optionKey => {
+        const optionButton = document.createElement('button');
+        optionButton.classList.add('option');
+        optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
+
+        // Add click event listener to check answer and apply color
+        optionButton.addEventListener('click', () => {
+            // Remove color from all options
+            const allOptions = mcqDiv.querySelectorAll('.option');
+            allOptions.forEach(option => {
+                option.classList.remove('correct', 'wrong');
             });
 
-            // Add explanation below options
-            const explanationDiv = document.createElement('div');
-            explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
-            mcqDiv.appendChild(explanationDiv);
+            // Apply color based on selected option
+            if (optionKey === mcq.answer) {
+                optionButton.classList.add('correct');
+                // Increment answered counter if correct option selected
+                if (!mcq.answered) {
+                    answeredCount++;
+                    mcq.answered = true;
+                }
+            } else {
+                optionButton.classList.add('wrong');
+            }
 
-            // Append MCQ div to container
-            mcqsContainer.appendChild(mcqDiv);
+            // Update progress counter
+            progressCounter.textContent = `Progress: ${answeredCount} / ${mcqData.length}`;
+            mcqDiv.querySelector('.explanation').style.display = 'block';
         });
-    }
 
-    // Add click event listener to the "Generate MCQs" button
-    document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
+        mcqDiv.appendChild(optionButton);
+    });
+
+    // Add explanation below options
+    const explanationDiv = document.createElement('div');
+    explanationDiv.classList.add('explanation');
+    explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
+    mcqDiv.appendChild(explanationDiv);
+
+    // Append MCQ div to container
+    mcqsContainer.appendChild(mcqDiv);
+});
+}
+
+// Add click event listener to the "Generate MCQs" button
+document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
+
+// Initially generate MCQs on page load
 </script>
--->
 
-
+<!-- 
 <script>
 // Sample MCQ data for testing
 const mockMCQData = [
@@ -533,7 +529,7 @@ document.getElementById('generateMCQsButton').addEventListener('click', generate
 generateMCQs();
 
 </script>
-
+ -->
 
 
 
@@ -545,7 +541,3 @@ generateMCQs();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 </html>
-
-
-
-
