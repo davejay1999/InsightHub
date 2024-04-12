@@ -34,234 +34,414 @@
 			</nav>
 		</div>
 		<div class="child2">
-		<h2 class="InsightHub">
-			Insight Hub
-		</h2>
-		<style>
-			.InsightHub {
-			text-align: center;
-			font-size: 30px;
-			font-weight: bold;
-			color: #333;
-			margin-top: 20px;
-			}
-		</style>
-		<div id="popup" class="popup">
-			<div class="popup-content">
-				<h2>Summary</h2>
-				<div id="summary"></div>
+            <div id="popupBackdrop" class="popup-backdrop"></div>
+			<h2 class="InsightHub">
+				Insight Hub
+			</h2>
+			<style>
+				.InsightHub {
+				text-align: center;
+				font-size: 30px;
+				font-weight: bold;
+				color: #333;
+				margin-top: 20px;
+				}
+			</style>
+			<div id="popup" class="popup">
+				<div class="popup-content">
+					<h2>Summary</h2>
+					<div id="summary"></div>
+				</div>
+				<div class="popup-content">
+					<h2>Questions</h2>
+					<div id="questions"></div>
+				</div>
+				<div class="popup-content">
+					<h2>Transcript</h2>
+					<div id="transcript"></div>
+				</div>
+				<button class="close-btn" onclick="closePopup()">Close</button>
+				<button class="pdf-btn"onclick="exportToPDF()">Export to PDF</button>
 			</div>
-			<div class="popup-content">
-				<h2>Questions</h2>
-				<div id="questions"></div>
-			</div>
-			<div class="popup-content">
-				<h2>Transcript</h2>
-				<div id="transcript"></div>
-			</div>
-			<button class="close-btn" onclick="closePopup()">Close</button>
-			<button class="pdf-btn"onclick="exportToPDF()">Export to PDF</button>
-		</div>
-		<script>
-			// Fetch user history data from API
-			async function fetchUserHistory() {
-			    // try {
-			    //     const token = localStorage.getItem('token');
-			    //     const response = await fetch("http://3.90.66.68:3000/user/action/getHistory", {
-			    //         method: "POST",
-			    //         headers: {
-			    //             "Content-Type": "application/json",
-			    //             "Authorization": `Bearer ${token}`
-			    //         },
-			    //         body: requestBody
-			    //     });
-			    //     const data = await response.json();
-			    //     return data;
-			    // } catch (error) {
-			    //     console.error('Error fetching user history:', error);
-			    // }
-			    // return [];
-			
-			    const data = [
-			{
-			"videoId": "MUImpPHNpvE",
-			"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
-			"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
-			"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
-			"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
-			"mcq": [
-			{
-			"question": "What is the main focus of the video regarding AI?",
-			"options": {
-			"A": "Job destruction",
-			"B": "Balanced approach and assessment",
-			"C": "Dismissal as a fad",
-			"D": "Accessibility to the masses"
-			},
-			"answer": "B",
-			"explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
-			},
-			{
-			"question": "Which technology made AI accessible to the non-technical masses?",
-			"options": {
-			"A": "GPT-1",
-			"B": "GPT-3",
-			"C": "Gemini",
-			"D": "Devon"
-			},
-			"answer": "B",
-			"explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
-			},
-			{
-			"question": "What is the current perception of deploying AI in secure environments?",
-			"options": {
-			"A": "High trust and readiness",
-			"B": "Immediate adoption",
-			"C": "Zero trust and evaluation",
-			"D": "Widespread implementation"
-			},
-			"answer": "C",
-			"explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
-			}
-			]
-			}
-			    ];
-			    return data;
-			}
-			
-			// Function to populate sidebar with user history
-			async function populatesidebar() {
-			const historyList = document.getElementById('historyList');
-			const userHistory = await fetchUserHistory();
-			
-			// Clear existing list items
-			historyList.innerHTML = '';
-			
-			userHistory.forEach(item => {
-			const button = document.createElement('button');
-			button.textContent = item.summary;
-			button.classList.add('history-button'); // Add a class to the button for styling
-			button.addEventListener('click', () => showPopup(item));
-			historyList.appendChild(button);
-			});
-			}
-			
-			// Function to show the popup window with details
-			function showPopup(historyItem) {
-			const popup = document.getElementById('popup');
-			const summary = document.getElementById('summary');
-			const transcript = document.getElementById('transcript');
-			const questions = document.getElementById('questions');
-			
-			// Populate popup with details
-			summary.textContent = historyItem.summary;
-			transcript.textContent = historyItem.transcript;
-			
-			// Clear existing questions
-			questions.innerHTML = '';
-			
-			// Populate questions
-			historyItem.mcq.forEach(mcq => {
-			const mcqDiv = document.createElement('div');
-			mcqDiv.classList.add('mcq');
-			mcqDiv.innerHTML = `<p>${mcq.question}</p>`;
-			
-			// Loop through options and create HTML buttons for each option
-			Object.keys(mcq.options).forEach(optionKey => {
-			const optionButton = document.createElement('button');
-			optionButton.classList.add('option1');
-			optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
-			
-			// Add click event listener to check answer and apply color
-			optionButton.addEventListener('click', () => {
-			// Remove color from all options
-			const allOptions = mcqDiv.querySelectorAll('.option1');
-			allOptions.forEach(option1 => {
-			option1.classList.remove('correct', 'wrong');
-			});
-			
-			// Apply color based on selected option
-			if (optionKey === mcq.answer) {
-			optionButton.classList.add('correct');
-			} else {
-			optionButton.classList.add('wrong');
-			}
-			
-			});
-			
-			mcqDiv.appendChild(optionButton);
-			});
-			
-			// Add explanation below options
-			const explanationDiv = document.createElement('div');
-			explanationDiv.classList.add('explanation1');
-			explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
-			mcqDiv.appendChild(explanationDiv);
-			
-			questions.appendChild(mcqDiv);
-			});
-			
-			// Display the popup
-			popup.style.display = 'block';
-			}
-			
-			// Function to close the popup window
-			function closePopup() {
-			const popup = document.getElementById('popup');
-			popup.style.display = 'none';
-			}
-			
-			function exportToPDF() {
-			// Initialize jsPDF
-			const doc = new jsPDF();
-			
-			// Get the content of the popup window
-			const summary = document.getElementById('summary').textContent;
-			const transcript = document.getElementById('transcript').textContent;
-			const questionsDiv = document.getElementById('questions'); // Use div containing questions
-			
-			// Add content to the PDF document
-			doc.text(`Summary: ${summary}`, 10, 10);
-			doc.text(`Transcript: ${transcript}`, 10, 20);
-			
-			let currentY = 30; // Initialize Y position
-			
-			// Iterate through each MCQ question and its options
-			const mcqDivs = questionsDiv.querySelectorAll('.mcq');
-			mcqDivs.forEach((mcqDiv, index) => {
-			const mcqQuestion = mcqDiv.querySelector('p').textContent;
-			doc.text(`Question ${index + 1}: ${mcqQuestion}`, 10, currentY); // Set question text and increment Y position
-			
-			currentY += 10; // Increment Y position for options
-			
-			// Iterate through options to get user-selected option and apply color
-			const optionButtons = mcqDiv.querySelectorAll('.option1');
-			optionButtons.forEach(optionButton => {
-			const optionKey = optionButton.textContent.charAt(0);
-			const optionText = optionButton.textContent.substring(3); // Remove option key from text
-			const isSelected = optionButton.classList.contains('correct') || optionButton.classList.contains('wrong');
-			const color = isSelected ? (optionButton.classList.contains('correct') ? { r: 0, g: 255, b: 0 } : { r: 255, g: 0, b: 0 }) : { r: 0, g: 0, b: 0 };
-			doc.setTextColor(color.r, color.g, color.b); // Set text color based on selection
-			doc.text(`- ${optionText}`, 20, currentY); // Add option text to PDF
-			currentY += 10; // Increment Y position for next option
-			});
-			
-			// Add explanation below options
-			const explanationDiv = mcqDiv.querySelector('.explanation1');
-			const explanation = explanationDiv ? explanationDiv.textContent.substring(13) : ''; // Remove 'Explanation: ' from text
-			doc.setTextColor(0, 0, 0); // Reset text color to black
-			doc.text(`Explanation: ${explanation}`, 20, currentY); // Add explanation text to PDF
-			currentY += 20; // Increment Y position for next question
-			});
-			
-			// Save the PDF
-			const currentTime = new Date();
-			const timeString = `${currentTime.getFullYear()}_${currentTime.getMonth() + 1}_${currentTime.getDate()}_${currentTime.getHours()}_${currentTime.getMinutes()}_${currentTime.getSeconds()}`;
-			doc.save(`user_history_${timeString}.pdf`);
-			}
-			
-			populatesidebar();
-		</script>
+			<script>
+				// Fetch user history data from API
+				async function fetchUserHistory() {
+				    // try {
+				    //     const token = localStorage.getItem('token');
+				    //     const response = await fetch("http://3.90.66.68:3000/user/action/getHistory", {
+				    //         method: "POST",
+				    //         headers: {
+				    //             "Content-Type": "application/json",
+				    //             "Authorization": `Bearer ${token}`
+				    //         },
+				    //         body: requestBody
+				    //     });
+				    //     const data = await response.json();
+				    //     return data;
+				    // } catch (error) {
+				    //     console.error('Error fetching user history:', error);
+				    // }
+				    // return [];
+				
+				    const data = [
+				{
+				"title": "MUImpPHNpvE",
+				"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
+				"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"mcq": [
+				{
+				"question": "What is the main focus of the video regarding AI?",
+				"options": {
+				"A": "Job destruction",
+				"B": "Balanced approach and assessment",
+				"C": "Dismissal as a fad",
+				"D": "Accessibility to the masses"
+				},
+				"answer": "B",
+				"explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
+				},
+				{
+				"question": "Which technology made AI accessible to the non-technical masses?",
+				"options": {
+				"A": "GPT-1",
+				"B": "GPT-3",
+				"C": "Gemini",
+				"D": "Devon"
+				},
+				"answer": "B",
+				"explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
+				},
+				{
+				"question": "What is the current perception of deploying AI in secure environments?",
+				"options": {
+				"A": "High trust and readiness",
+				"B": "Immediate adoption",
+				"C": "Zero trust and evaluation",
+				"D": "Widespread implementation"
+				},
+				"answer": "C",
+				"explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
+				}
+				]
+				},
+                {
+				"title": "MUImpPHNpvE",
+				"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
+				"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"mcq": [
+				{
+				"question": "What is the main focus of the video regarding AI?",
+				"options": {
+				"A": "Job destruction",
+				"B": "Balanced approach and assessment",
+				"C": "Dismissal as a fad",
+				"D": "Accessibility to the masses"
+				},
+				"answer": "B",
+				"explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
+				},
+				{
+				"question": "Which technology made AI accessible to the non-technical masses?",
+				"options": {
+				"A": "GPT-1",
+				"B": "GPT-3",
+				"C": "Gemini",
+				"D": "Devon"
+				},
+				"answer": "B",
+				"explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
+				},
+				{
+				"question": "What is the current perception of deploying AI in secure environments?",
+				"options": {
+				"A": "High trust and readiness",
+				"B": "Immediate adoption",
+				"C": "Zero trust and evaluation",
+				"D": "Widespread implementation"
+				},
+				"answer": "C",
+				"explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
+				}
+				]
+				},				{
+				"title": "MUImpPHNpvE",
+				"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
+				"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"mcq": [
+				{
+				"question": "What is the main focus of the video regarding AI?",
+				"options": {
+				"A": "Job destruction",
+				"B": "Balanced approach and assessment",
+				"C": "Dismissal as a fad",
+				"D": "Accessibility to the masses"
+				},
+				"answer": "B",
+				"explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
+				},
+				{
+				"question": "Which technology made AI accessible to the non-technical masses?",
+				"options": {
+				"A": "GPT-1",
+				"B": "GPT-3",
+				"C": "Gemini",
+				"D": "Devon"
+				},
+				"answer": "B",
+				"explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
+				},
+				{
+				"question": "What is the current perception of deploying AI in secure environments?",
+				"options": {
+				"A": "High trust and readiness",
+				"B": "Immediate adoption",
+				"C": "Zero trust and evaluation",
+				"D": "Widespread implementation"
+				},
+				"answer": "C",
+				"explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
+				}
+				]
+				},
+                {
+				"title": "MUImpPHNpvE",
+				"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
+				"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+				"mcq": [
+				{
+				"question": "What is the main focus of the video regarding AI?",
+				"options": {
+				"A": "Job destruction",
+				"B": "Balanced approach and assessment",
+				"C": "Dismissal as a fad",
+				"D": "Accessibility to the masses"
+				},
+				"answer": "B",
+				"explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
+				},
+				{
+				"question": "Which technology made AI accessible to the non-technical masses?",
+				"options": {
+				"A": "GPT-1",
+				"B": "GPT-3",
+				"C": "Gemini",
+				"D": "Devon"
+				},
+				"answer": "B",
+				"explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
+				},
+				{
+				"question": "What is the current perception of deploying AI in secure environments?",
+				"options": {
+				"A": "High trust and readiness",
+				"B": "Immediate adoption",
+				"C": "Zero trust and evaluation",
+				"D": "Widespread implementation"
+				},
+				"answer": "C",
+				"explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
+				}
+				]
+				}
+				    ];
+				    return data;
+				}
+				
+				// Function to populate sidebar with user history
+				async function populatesidebar() {
+				const historyList = document.getElementById('historyList');
+				const userHistory = await fetchUserHistory();
+				
+				// Clear existing list items
+				historyList.innerHTML = '';
+				
+				userHistory.forEach(item => {
+				const button = document.createElement('button');
+				button.textContent = item.title;
+				button.classList.add('history-button'); // Add a class to the button for styling
+				button.addEventListener('click', () => showPopup(item));
+				historyList.appendChild(button);
+				});
+				}
+				
+				// Function to show the popup window with details
+				function showPopup(historyItem) {
+                const popup = document.getElementById('popup');
+                const backdrop = document.getElementById('popupBackdrop');
+                popup.style.display = 'block';
+                backdrop.style.display = 'block';
+				const summary = document.getElementById('summary');
+				const transcript = document.getElementById('transcript');
+				const questions = document.getElementById('questions');
+				
+				// Populate popup with details
+				summary.textContent = historyItem.summary;
+				transcript.textContent = historyItem.transcript;
+				
+				// Clear existing questions
+				questions.innerHTML = '';
+				
+				// Populate questions
+				historyItem.mcq.forEach(mcq => {
+				const mcqDiv = document.createElement('div');
+				mcqDiv.classList.add('mcq');
+				mcqDiv.innerHTML = `<p>${mcq.question}</p>`;
+				
+				// Loop through options and create HTML buttons for each option
+				Object.keys(mcq.options).forEach(optionKey => {
+				const optionButton = document.createElement('button');
+				optionButton.classList.add('option1');
+				optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
+				
+				// Add click event listener to check answer and apply color
+				optionButton.addEventListener('click', () => {
+				// Remove color from all options
+				const allOptions = mcqDiv.querySelectorAll('.option1');
+				allOptions.forEach(option1 => {
+				option1.classList.remove('correct', 'wrong');
+				});
+				
+				// Apply color based on selected option
+				if (optionKey === mcq.answer) {
+				optionButton.classList.add('correct');
+				} else {
+				optionButton.classList.add('wrong');
+				}
+				
+				});
+				
+				mcqDiv.appendChild(optionButton);
+				});
+				
+				// Add explanation below options
+				const explanationDiv = document.createElement('div');
+				explanationDiv.classList.add('explanation1');
+				explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
+				mcqDiv.appendChild(explanationDiv);
+				
+				questions.appendChild(mcqDiv);
+				});
+				
+				// Display the popup
+				popup.style.display = 'block';
+				}
+				
+				// Function to close the popup window
+				function closePopup() {
+                    const popup = document.getElementById('popup');
+                    const backdrop = document.getElementById('popupBackdrop');
+                    popup.style.display = 'none';
+                    backdrop.style.display = 'none';
+				}
+                const backdrop = document.getElementById('popupBackdrop');
+backdrop.addEventListener('click', closePopup);
+
+                function addWrappedText(doc, text, x, y, maxWidth, lineHeight) {
+                    const words = text.split(' ');
+                    let line = '';
+                    let currentY = y;
+
+                    for (let i = 0; i < words.length; i++) {
+                        const word = words[i];
+                        const lineWidth = doc.getStringUnitWidth(line + word) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                        
+                        if (lineWidth < maxWidth) {
+                            line += (line === '' ? '' : ' ') + word;
+                        } else {
+                            doc.text(line, x, currentY);
+                            line = word;
+                            currentY += lineHeight;
+                        }
+                    }
+
+                    doc.text(line, x, currentY);
+                    return currentY;
+                }       
+
+                function exportToPDF() {
+                    // Initialize jsPDF
+                    const doc = new jsPDF();
+                    doc.setFontSize(10);
+
+                    // Get the content of the popup window
+                    const summary = document.getElementById('summary').textContent;
+                    const transcript = document.getElementById('transcript').textContent;
+                    const questionsDiv = document.getElementById('questions'); // Use div containing questions
+
+                    // Set initial position
+                    let currentY = 10; // Initialize Y position
+
+                    // Add content to the PDF document
+                    currentY = addWrappedText(doc, `Summary: ${summary}`, 10, currentY, 180, 5);
+                    currentY += 10; // Adjust as needed for spacing
+
+                    currentY = addWrappedText(doc, `Transcript: ${transcript}`, 10, currentY, 180, 5);
+                    currentY += 10; // Adjust as needed for spacing
+                    if (currentY > 250) { // Check if current Y position exceeds page height
+                            doc.addPage(); // Add new page
+                            currentY = 10; // Reset Y position
+                        }
+                    // Iterate through each MCQ question and its options
+                    const mcqDivs = questionsDiv.querySelectorAll('.mcq');
+                    mcqDivs.forEach((mcqDiv, index) => {
+                        if (currentY > 250) { // Check if current Y position exceeds page height
+                            doc.addPage(); // Add new page
+                            currentY = 10; // Reset Y position
+                        }                        
+                        const mcqQuestion = mcqDiv.querySelector('p').textContent;
+                        currentY = addWrappedText(doc, `Question ${index + 1}: ${mcqQuestion}`, 10, currentY, 180, 5); // Set question text and increment Y position
+                        currentY += 10; // Adjust as needed for spacing
+
+                        // Iterate through options to get user-selected option and apply color
+                        const optionButtons = mcqDiv.querySelectorAll('.option1');
+                        optionButtons.forEach(optionButton => {
+                            if (currentY > 250) { // Check if current Y position exceeds page height
+                            doc.addPage(); // Add new page
+                            currentY = 10; // Reset Y position
+                        }                            
+                            const optionKey = optionButton.textContent.charAt(0);
+                            const optionText = optionButton.textContent.substring(3); // Remove option key from text
+                            const isSelected = optionButton.classList.contains('correct') || optionButton.classList.contains('wrong');
+                            const color = isSelected ? (optionButton.classList.contains('correct') ? { r: 0, g: 255, b: 0 } : { r: 255, g: 0, b: 0 }) : { r: 0, g: 0, b: 0 };
+                            doc.setTextColor(color.r, color.g, color.b); // Set text color based on selection
+                            addWrappedText(doc, `- ${optionText}`, 20, currentY, 170, 5); // Add option text to PDF
+                            currentY += 10; // Adjust as needed for spacing
+                        });
+
+                        // Add explanation below options
+                        const explanationDiv = mcqDiv.querySelector('.explanation1');
+                        const explanation = explanationDiv ? explanationDiv.textContent.substring(13) : ''; // Remove 'Explanation: ' from text
+                        doc.setTextColor(0, 0, 0); // Reset text color to black
+                        addWrappedText(doc, `Explanation: ${explanation}`, 20, currentY, 170, 5); // Add explanation text to PDF
+                        if (currentY > 250) { // Check if current Y position exceeds page height
+                            doc.addPage(); // Add new page
+                            currentY = 10; // Reset Y position
+                        }
+                        currentY += 10; // Adjust as needed for spacing
+                    });
+
+                    // Save the PDF
+                    const currentTime = new Date();
+                    const timeString = `${currentTime.getFullYear()}_${currentTime.getMonth() + 1}_${currentTime.getDate()}_${currentTime.getHours()}_${currentTime.getMinutes()}_${currentTime.getSeconds()}`;
+                    doc.save(`user_history_${timeString}.pdf`);
+                }
+
+				
+				populatesidebar();
+			</script>
+
+
+
+
+
 		<div class="wrapper1">
 			<header>
 				<h1>Video Transcript</h1>

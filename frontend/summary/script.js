@@ -64,6 +64,10 @@ function handleFiles(files)
 	// You can upload the files using AJAX or any other method here
 }
 
+
+
+
+
 function redirectToAnotherPage(type_of_data)
 {
 	// Show the buffering animation
@@ -156,6 +160,8 @@ show_user_menu.addEventListener("click",
 		}
 	});
 
+
+    
 const models = document.querySelectorAll(".model-selector button");
 
 for (const model of models)
@@ -171,39 +177,3 @@ for (const model of models)
 	});
 }
 
-const message_box = document.querySelector("#message");
-
-message_box.addEventListener("keyup",
-	function ()
-	{
-		message_box.style.height = "auto";
-		let height = message_box.scrollHeight + 2;
-		if (height > 200)
-		{
-			height = 200;
-		}
-		message_box.style.height = height + "px";
-	});
-
-function show_view(view_selector)
-{
-	document.querySelectorAll(".view").forEach(view =>
-	{
-		view.style.display = "none";
-	});
-
-	document.querySelector(view_selector).style.display = "flex";
-}
-
-new_chat_button.addEventListener("click", function ()
-{
-	show_view(".new-chat-view");
-});
-
-document.querySelectorAll(".conversation-button").forEach(button =>
-{
-	button.addEventListener("click", function ()
-	{
-		show_view(".conversation-view");
-	});
-});

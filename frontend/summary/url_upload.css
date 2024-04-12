@@ -19,8 +19,27 @@
   
 }
 
+.mcq {
+  margin-top: 50px;
+  margin-left: 20px;
+  position: relative;
+  }
+  #generateMCQsButton {
+  position: relative;
+  padding: 10px 30px;
+  font-size: 16px;
+  left: center;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Adding smooth transition */
+  background-color: #CD5C5C;
+  }
+  #generateMCQsButton:hover {
+  transform: scale(1.1); /* Scale button on hover */
+  }
 
-.option {
+
+
+.option1 {
   padding: 10px;
   margin: 5px;
   width: 60%;
@@ -29,10 +48,20 @@
   color: #333; /* Dark text color */
 }
 
-.option:hover {
+.option1:hover {
   background-color: #e0e0e0; /* Light gray background on hover */
   color: #000;
 }
+
+.correct {
+  background-color: #7ebf7e; /* Light green background for correct answer */
+  color: #fff; /* White text color for correct answer */
+  }
+  .wrong {
+  background-color: #ff9999; /* Light red background for wrong answer */
+  color: #fff; /* White text color for wrong answer */
+  }
+
 header h1{
   border: 10px;
   font-size: 20px;

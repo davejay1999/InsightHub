@@ -58,7 +58,16 @@ body {
     font-family: system-ui, sans-serif;
 }
 
-
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Ensure it's above other content */
+    display: none; /* Initially hidden */
+}
 .popup {
     display: none;
     position: fixed;
@@ -80,6 +89,7 @@ body {
     color: #000;
     position: absolute;
     top: 10px;
+    z-index: 2;
     right: 10px;
     cursor: pointer;
     border-radius: 1px;
@@ -211,7 +221,7 @@ button:hover {
 .history-button {
     padding: 10px;
     margin-bottom: 5px;
-    height: 15%;
+    height: auto;
     background: var(--color-secondary);
     border: none;
     overflow-y: hidden ;
