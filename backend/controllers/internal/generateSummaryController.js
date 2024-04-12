@@ -1,38 +1,19 @@
 const axios = require("axios");
-//const isTokenValid = require('./tokenValidator');
 const { getSubtitles } = require("youtube-captions-scraper");
 
 exports.summarize = async (req, res) => {
   const open_ai_auth_token = process.env.OPEN_AI_KEY;
   const videoId = req.body.video_id;
-
   const llm_model = req.body.llm_model || "gpt-3.5-turbo-0125";
-  let summary_word_count = req.body.word_limit || 500;
+  let summary_word_count = Math.min(req.body.word_limit || 500, 200);
   const additional_instructions = req.body.additional_instructions || "";
 
-  if (summary_word_count > 200) {
-    summary_word_count = 200;
-  }
-
   console.log(
-    `\nStarting Generating Summary. Model - ${llm_model}, Word Limit - ${summary_word_count}`
+    `\nStarting Summary Generation. Model: ${llm_model}, Word Limit: ${summary_word_count}`
   );
 
   try {
-    console.log("Extracting Subtitles/Transcript");
-    subtitles = await getSubtitles({
-      videoID: videoId,
-      lang: "en",
-    });
-
-    let transcript_to_send = subtitles
-      .map((subtitle) => subtitle.text)
-      .join(" ")
-      .slice(0, 3000);
-
-    console.log(
-      "DONE  - Extracting Subtitles " + transcript_to_send.slice(0, 50)
-    );
+    const transcript_to_send = await getTranscript(videoId);
 
     const requestBody = {
       model: llm_model,
@@ -48,7 +29,7 @@ exports.summarize = async (req, res) => {
       ],
     };
 
-    const complete_res_body = await axios.post(
+    const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       requestBody,
       {
@@ -59,10 +40,12 @@ exports.summarize = async (req, res) => {
       }
     );
 
-    const summaryContent = JSON.parse(
-      complete_res_body.data.choices[0].message.content
+    console.log(
+      "Received response from OpenAI: " + JSON.stringify(response.data)
     );
-    const usage = complete_res_body.data.usage;
+
+    const summaryContent = JSON.parse(response.data.choices[0].message.content);
+    const usage = response.data.usage;
 
     const customResponse = {
       summary: summaryContent.summary,
@@ -75,16 +58,34 @@ exports.summarize = async (req, res) => {
       transcript: transcript_to_send,
     };
 
-    console.log(`\nSummary Generation Successful`);
-
-    res.status(200).json(customResponse); // Sending the custom response as JSON
+    console.log("\nSummary Generation Successful");
+    res.status(200).json(customResponse);
   } catch (error) {
-    console.error("Error:", error);
-    res
-      .status(500)
-      .json({ error: "Internal Server Error", message: error.message });
+    console.error("Error: ", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: error.message,
+      error_code: "2354r3w4",
+      details: error.response?.data || error,
+    });
   }
 };
+
+async function getTranscript(videoId) {
+  console.log("Extracting Subtitles/Transcript for videoId:", videoId);
+  try {
+    const subtitles = await getSubtitles({ videoID: videoId, lang: "en" });
+    const transcript = subtitles
+      .map((subtitle) => subtitle.text)
+      .join(" ")
+      .slice(0, 3000);
+    console.log("DONE - Extracting Subtitles: " + transcript.slice(0, 50));
+    return transcript;
+  } catch (error) {
+    console.error("Failed to retrieve subtitles:", error);
+    throw error; // Re-throw the error to handle it in the calling function
+  }
+}
 
 function constructPrompt(number_of_q, summary_word_limit) {
   const prompt = `
