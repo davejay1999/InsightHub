@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
 
     // Create a JWT token
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: "100h",
     });
 
     await pool.query(

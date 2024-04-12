@@ -13,7 +13,8 @@ exports.summarize = async (req, res) => {
   );
 
   try {
-    const transcript_to_send = await getTranscript(videoId);
+    const complete_transcript = await getTranscript(videoId);
+    const transcript_to_send = complete_transcript.slice(0, 3000);
 
     const requestBody = {
       model: llm_model,
@@ -55,7 +56,7 @@ exports.summarize = async (req, res) => {
       usage: usage,
       word_limit: summary_word_count,
       additional_instructions: additional_instructions,
-      transcript: transcript_to_send,
+      transcript: complete_transcript,
     };
 
     console.log("\nSummary Generation Successful");
@@ -75,10 +76,7 @@ async function getTranscript(videoId) {
   console.log("Extracting Subtitles/Transcript for videoId:", videoId);
   try {
     const subtitles = await getSubtitles({ videoID: videoId, lang: "en" });
-    const transcript = subtitles
-      .map((subtitle) => subtitle.text)
-      .join(" ")
-      .slice(0, 3000);
+    const transcript = subtitles.map((subtitle) => subtitle.text).join(" ");
     console.log("DONE - Extracting Subtitles: " + transcript.slice(0, 50));
     return transcript;
   } catch (error) {
