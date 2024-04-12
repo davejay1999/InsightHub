@@ -64,7 +64,7 @@ body {
     position: fixed;
     overflow-y: scroll;
     z-index: 2;
-    top: 18%;
+    top: 8%;
     left: 30%;
     background-color: #dddddd; 
     padding: 20px;
@@ -92,7 +92,7 @@ body {
     border-color: var(--color-button-hover);
     background-color: var(--color-button-hover);    
     color: #000;
-    position: absolute;
+    position: relative;
     bottom: 10px;
     cursor: pointer;
 }
@@ -211,10 +211,12 @@ button:hover {
 .history-button {
     padding: 10px;
     margin-bottom: 5px;
+    height: 15%;
     background: var(--color-secondary);
     border: none;
+    overflow-y: hidden ;
+    width: 80%;
     border-radius: 5px;
-    width: 85%;
     cursor: pointer;
     color: white; 
 }
@@ -223,6 +225,21 @@ button:hover {
     background-color: var(--color-button-hover);
 }
 
+
+
+.option1 {
+    padding: 10px;
+    margin: 5px;
+    width: 60%;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Light gray background */
+    color: #333; /* Dark text color */
+  }
+  
+  .option1:hover {
+    background-color: #e0e0e0; /* Light gray background on hover */
+    color: #000;
+  }
 .fade {
     position: absolute;
     right: 0;

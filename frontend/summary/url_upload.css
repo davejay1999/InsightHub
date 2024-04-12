@@ -18,6 +18,21 @@
   left: 900px;
   
 }
+
+
+.option {
+  padding: 10px;
+  margin: 5px;
+  width: 60%;
+  cursor: pointer;
+  background-color: #f0f0f0; /* Light gray background */
+  color: #333; /* Dark text color */
+}
+
+.option:hover {
+  background-color: #e0e0e0; /* Light gray background on hover */
+  color: #000;
+}
 header h1{
   border: 10px;
   font-size: 20px;
@@ -74,13 +89,17 @@ form input:valid ~ button{
 }
 
 
-.wrapper {
+.wrapper1 {
   border: 3px dotted rgb(195, 32, 32);
   padding: 15px;
-  width: auto;
+  width: 35%;
   height: auto;
   position: relative;
-  left: 34%;
+  left: 10%;
+  top: 20%;
+  text-align: center;
+
+
 }
 
 .button-container {
@@ -90,9 +109,9 @@ form input:valid ~ button{
 
 #uploadButton1 {
   position: relative;
-  left: 34%;
+  left: 35%;
   text-align: center;
-  width: 155px;
+  width: 30%;
   height: 50px;
   background-color: #CD5C5C;
   color: white;
@@ -114,19 +133,46 @@ form input:valid ~ button{
 
 
 
-.wrapper1{
-    text-align: center;
+.wrapper2 {
+  border: 3px dotted rgb(195, 32, 32);
+  padding: 15px;
+  width: 35%;
+  height: auto;
   position: relative;
-  max-width: 500px;
-  max-height: 255px;
-  background: #fff;
-  border-radius: 7px;
-  padding: 200px 10px 14px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-  top: -140px;
-  left: 330px;
-
+  top: -4%;
+  left: 50%;
+  text-align: center;
 }
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+#uploadButton2 {
+  position: relative;
+  left: 35%;
+  text-align: center;
+  width: 30%;
+  height: 50px;
+  background-color: #CD5C5C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#uploadButton2:hover {
+  background-color: #df808d;
+}
+
+#loading-spinner {
+  margin-left: 10px; /* Adjust margin as needed */
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+}
+
 header h1{
   font-size: 20px;
   font-weight: 400;

@@ -1,0 +1,186 @@
+
+<h2 class="InsightHub">
+    Insight Hub
+</h2>
+<style>
+    .InsightHub {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 20px;
+    }
+</style>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <h2>Summary</h2>
+        <div id="summary"></div>
+    </div>
+    <div class="popup-content">
+        <h2>Questions</h2>
+        <div id="questions"></div>
+    </div>
+    <div class="popup-content">
+        <h2>Transcript</h2>
+        <div id="transcript"></div>
+    </div>
+
+    <button class="close-btn" onclick="closePopup()">Close</button>
+    <button class="pdf-btn"onclick="exportToPDF()">Export to PDF</button>
+</div>
+        
+        <script>
+            // Fetch user history data from API
+            async function fetchUserHistory() {
+                // try {
+                //     const token = localStorage.getItem('token');
+                //     const response = await fetch("http://3.90.66.68:3000/user/action/getHistory", {
+                //         method: "POST",
+                //         headers: {
+                //             "Content-Type": "application/json",
+                //             "Authorization": `Bearer ${token}`
+                //         },
+                //         body: requestBody
+                //     });
+                //     const data = await response.json();
+                //     return data;
+                // } catch (error) {
+                //     console.error('Error fetching user history:', error);
+                // }
+                // return [];
+    
+                const data = [
+{
+"videoId": "MUImpPHNpvE",
+"transcript": "opinions out there about AI can be really extreme from it completely wiping out our jobs to completely ignoring it and waving it off as another fad but I think it's highly beneficial to approach this in a more balanced manner what's happened what's not what's good what's bad and ultimately where are we  regarding the hallucinations you saw Sora as amazing as it is struggle with rendering and then Gemini Gemini is  at's where we're currently at next I want to talk about where we're headed well currently c",
+"summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+"informal_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+"detailed_summary": "The video discusses the extreme opinions about AI ranging from job destruction to dismissing it as a fad. The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction. AI has evolved rapidly and become accessible to still a lack of trust in deploying AI in critical environments. The speaker discusses the challenges and opportunities presented by AI, including its role in everyday tasks and decision-making.",
+"mcq": [
+    {
+        "question": "What is the main focus of the video regarding AI?",
+        "options": {
+            "A": "Job destruction",
+            "B": "Balanced approach and assessment",
+            "C": "Dismissal as a fad",
+            "D": "Accessibility to the masses"
+        },
+        "answer": "B",
+        "explanation": "The speaker emphasizes the importance of taking a balanced approach by assessing the current state of AI, its benefits, drawbacks, and the future direction."
+    },
+    {
+        "question": "Which technology made AI accessible to the non-technical masses?",
+        "options": {
+            "A": "GPT-1",
+            "B": "GPT-3",
+            "C": "Gemini",
+            "D": "Devon"
+        },
+        "answer": "B",
+        "explanation": "GPT-3 made AI available to the masses, including non-technical individuals."
+    },
+    {
+        "question": "What is the current perception of deploying AI in secure environments?",
+        "options": {
+            "A": "High trust and readiness",
+            "B": "Immediate adoption",
+            "C": "Zero trust and evaluation",
+            "D": "Widespread implementation"
+        },
+        "answer": "C",
+        "explanation": "There is currently zero trust in putting AI like Devon into secure environments, with the world watching and evaluating before adoption."
+    }
+]
+}
+                ];
+                return data;
+            }
+
+// Function to populate sidebar with user history
+async function populatesidebar() {
+    const historyList = document.getElementById('historyList');
+    const userHistory = await fetchUserHistory();
+
+    // Clear existing list items
+    historyList.innerHTML = '';
+
+    userHistory.forEach(item => {
+        const button = document.createElement('button');
+        button.textContent = item.summary;
+        button.classList.add('history-button'); // Add a class to the button for styling
+        button.addEventListener('click', () => showPopup(item));
+        historyList.appendChild(button);
+    });
+}
+
+// Function to show the popup window with details
+function showPopup(historyItem) {
+    const popup = document.getElementById('popup');
+    const summary = document.getElementById('summary');
+    const transcript = document.getElementById('transcript');
+    const questions = document.getElementById('questions');
+
+    // Populate popup with details
+    summary.textContent = historyItem.summary;
+    transcript.textContent = historyItem.transcript;
+
+    // Clear existing questions
+    questions.innerHTML = '';
+
+    // Populate questions
+    historyItem.mcq.forEach(mcq => {
+        const mcqDiv = document.createElement('div');
+        mcqDiv.classList.add('mcq');
+        mcqDiv.innerHTML = `<p>${mcq.question}</p>`;
+
+        Object.keys(mcq.options).forEach(optionKey => {
+            const optionButton = document.createElement('button');
+            optionButton.classList.add('option');
+            optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
+            mcqDiv.appendChild(optionButton);
+        });
+
+        const explanationDiv = document.createElement('div');
+        explanationDiv.classList.add('explanation');
+        explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
+        mcqDiv.appendChild(explanationDiv);
+
+        questions.appendChild(mcqDiv);
+    });
+
+    // Display the popup
+    popup.style.display = 'block';
+}
+
+// Function to close the popup window
+function closePopup() {
+    const popup = document.getElementById('popup');
+    popup.style.display = 'none';
+}
+
+function exportToPDF() {
+    // Initialize jsPDF
+    const doc = new jsPDF();
+
+    // Get the content of the popup window
+    const summary = document.getElementById('summary').textContent;
+    const transcript = document.getElementById('transcript').textContent;
+    const questions = document.getElementById('questions').innerHTML; // Use innerHTML to get HTML content
+
+    // Add content to the PDF document
+    doc.text(`Summary: ${summary}`, 10, 10);
+    doc.text(`Transcript: ${transcript}`, 10, 20);
+    // Add questions with markup to maintain formatting
+    doc.fromHTML(`Questions: ${questions}`, 10, 30);
+
+    const currentTime = new Date();
+    const timeString = `${currentTime.getFullYear()}_${currentTime.getMonth() + 1}_${currentTime.getDate()}_${currentTime.getHours()}_${currentTime.getMinutes()}_${currentTime.getSeconds()}`;
+
+    // Save the PDF
+    doc.save(`user_history_${timeString}.pdf`);                
+}
+
+            // Call the function to populate the sidebar with user history
+            populatesidebar();
+        </script>
+
