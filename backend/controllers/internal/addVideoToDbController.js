@@ -9,94 +9,71 @@ exports.addVideoToDb = async (req, res) => {
       "SELECT * FROM summaries WHERE video_id = ?",
       [videoId]
     );
-
-    let cacheHitStatus;
+    let cacheHit = existingVideo.length > 0;
     let responseData = { videoId };
 
-    let tokenUsed = {
-      prompt_tokens: 0,
-      completion_tokens: 0,
-      total_tokens: 0,
-    };
-    console.log(`cache hit status - ${existingVideo.length > 0}`);
+    console.log(`Cache hit status - ${cacheHit}`);
 
-    if (existingVideo.length > 0) {
-      // If Video Exists in DB
-      cacheHitStatus = true;
+    if (cacheHit) {
       responseData = {
         ...responseData,
-        transcript: existingVideo[0].transcript,
-        summary: existingVideo[0].summary,
-        informal_summary: existingVideo[0].informal_summary,
-        detailed_summary: existingVideo[0].detailed_summary,
-        mcq: existingVideo[0].q_and_a,
+        ...existingVideo[0],
       };
     } else {
-      // If Video Doesn't exist in DB
       const internalSummaryUrl = "http://localhost:3000/internal/summarize";
-      let internalSummaryResponse;
-
       try {
-        // To Get Summary
-        internalSummaryResponse = await axios.post(internalSummaryUrl, {
+        const internalSummaryResponse = await axios.post(internalSummaryUrl, {
           ...req.body,
         });
+        const {
+          summary,
+          informal_summary,
+          detailed_summary,
+          transcript,
+          mcq,
+          usage,
+        } = internalSummaryResponse.data;
+
+        await pool.query(
+          "INSERT INTO summaries (video_id, transcript, summary, q_and_a, informal_summary, detailed_summary) VALUES (?, ?, ?, ?, ?, ?)",
+          [
+            videoId,
+            transcript,
+            summary,
+            JSON.stringify(mcq),
+            informal_summary,
+            detailed_summary,
+          ]
+        );
+
+        responseData = {
+          ...responseData,
+          transcript,
+          summary,
+          informal_summary,
+          detailed_summary,
+          mcq,
+        };
+
+        responseData.token_used = usage;
       } catch (error) {
-        console.error("Error:", error);
-
-        // Check if the error has a response with data
-        const errorData = error.response ? error.response.data : {};
-
+        console.error("Error fetching summary:", error);
         return res.status(500).json({
-          error: "Internal Server Error while summary generation",
+          error: "Internal Server Error while fetching summary",
           message: error.message,
-          ...errorData, // Include the error data from the Axios response
+          details: error.response ? error.response.data : {},
         });
       }
-
-      const {
-        summary: summaryToSend,
-        informal_summary: informal_summary_to_send,
-        detailed_summary: detailed_summary_to_send,
-        transcript: videoTranscript,
-        mcq: questionsData,
-      } = internalSummaryResponse.data;
-
-      tokenUsed = internalSummaryResponse.data.usage;
-      cacheHitStatus = false;
-
-      // Insert the new data into the database
-      await pool.query(
-        "INSERT INTO summaries (video_id, transcript, summary, q_and_a, informal_summary , detailed_summary ) VALUES (?, ?, ?, ? , ? , ?)",
-        [
-          videoId,
-          videoTranscript,
-          summaryToSend,
-          JSON.stringify(questionsData),
-          informal_summary_to_send,
-          detailed_summary_to_send,
-        ]
-      );
-
-      responseData = {
-        ...responseData,
-        transcript: videoTranscript,
-        summary: summaryToSend,
-        informal_summary: informal_summary_to_send,
-        detailed_summary: detailed_summary_to_send,
-        mcq: questionsData,
-      };
     }
 
     res.status(200).json({
-      cache_hit: cacheHitStatus,
-      token_used: tokenUsed,
+      cache_hit: cacheHit,
       ...responseData,
     });
   } catch (error) {
+    console.error("Error in addVideoToDb:", error);
     res.status(500).json({
-      error: "Internal Server Error in Add video to db controller ",
-      error_id: "345",
+      error: "Internal Server Error in Add video to db controller",
       message: error.message,
     });
   }
