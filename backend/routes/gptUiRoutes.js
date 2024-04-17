@@ -3,12 +3,12 @@ const router = express.Router();
 const path = require("path");
 
 router.get("", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/homePage.html"));
+  res.sendFile(path.join(__dirname, "../../frontend/home/homepage.html"));
 });
 
 // Serve the login page or other frontend pages
 router.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/login.html"));
+  res.sendFile(path.join(__dirname, "../../frontend/login/login.html"));
 });
 
 router.get("/user-details", (req, res) => {
@@ -27,7 +27,9 @@ router.get("/edit_profile", (req, res) => {
 });
 
 router.get("/user_history", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/user_history.html"));
+  res.sendFile(
+    path.join(__dirname, "../../frontend/user-management/user_history.html")
+  );
 });
 
 router.get("/index", (req, res) => {

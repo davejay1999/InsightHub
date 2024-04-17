@@ -26,13 +26,14 @@ const gptUiRoutes = require("./routes/gptUiRoutes");
 app.use("/user/management", userManagementRoutes);
 app.use("/user/action", userActionsRoutes);
 app.use("/internal", internalRoutes);
-app.use("/gpt", uiRoutes);
 app.use("/", gptUiRoutes);
 
 // Serve static files from the frontend directory
 // app.use(express.static(path.join(__dirname, "..", "jay_frontend")));
 
 app.use(express.static(path.join(__dirname, "..", "frontend")));
+app.use(express.static(path.join(__dirname, "..", "frontend/login")));
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
