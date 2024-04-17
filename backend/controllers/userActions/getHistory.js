@@ -12,7 +12,7 @@ exports.getHistory = async (req, res) => {
   try {
     // Query to get the history for the given user_id along with the summary from the summaries table
     const [rows] = await pool.query(
-      "SELECT ur.id, ur.videoId, ur.id, ur.total_tokens, s.summary FROM userRequests ur LEFT JOIN summaries s ON ur.videoId = s.video_id WHERE ur.userId = ?",
+      "SELECT ur.id, ur.videoId, ur.id, ur.total_tokens, s.summary, s.title, q_and_a FROM userRequests ur LEFT JOIN summaries s ON ur.videoId = s.video_id WHERE ur.userId = ?",
       [user_id]
     );
 

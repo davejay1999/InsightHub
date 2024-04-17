@@ -15,9 +15,17 @@ exports.addVideoToDb = async (req, res) => {
     console.log(`Cache hit status - ${cacheHit}`);
 
     if (cacheHit) {
+      const tokens = {
+        token_used: {
+          total_tokens: 0,
+          completion_tokens: 0,
+          prompt_tokens: 0,
+        },
+      };
       responseData = {
         ...responseData,
         ...existingVideo[0],
+        ...tokens,
       };
     } else {
       const internalSummaryUrl = "http://localhost:3000/internal/summarize";
@@ -31,11 +39,12 @@ exports.addVideoToDb = async (req, res) => {
           detailed_summary,
           transcript,
           mcq,
+          title,
           usage,
         } = internalSummaryResponse.data;
 
         await pool.query(
-          "INSERT INTO summaries (video_id, transcript, summary, q_and_a, informal_summary, detailed_summary) VALUES (?, ?, ?, ?, ?, ?)",
+          "INSERT INTO summaries (video_id, transcript, summary, q_and_a,  informal_summary, detailed_summary, title) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
             videoId,
             transcript,
@@ -43,9 +52,10 @@ exports.addVideoToDb = async (req, res) => {
             JSON.stringify(mcq),
             informal_summary,
             detailed_summary,
+            title,
           ]
         );
-
+        console.log(`\n\n\n\n ${title} \n\n\n\n`);
         responseData = {
           ...responseData,
           transcript,
@@ -53,6 +63,7 @@ exports.addVideoToDb = async (req, res) => {
           informal_summary,
           detailed_summary,
           mcq,
+          title,
         };
 
         responseData.token_used = usage;

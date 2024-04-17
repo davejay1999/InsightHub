@@ -48,6 +48,8 @@ exports.summarize = async (req, res) => {
     const summaryContent = JSON.parse(response.data.choices[0].message.content);
     const usage = response.data.usage;
 
+    console.log(`\n\n\n\n ${summaryContent.title} \n\n\n\n`);
+
     const customResponse = {
       summary: summaryContent.summary,
       informal_summary: summaryContent.informal_summary,
@@ -57,6 +59,7 @@ exports.summarize = async (req, res) => {
       word_limit: summary_word_count,
       additional_instructions: additional_instructions,
       transcript: complete_transcript,
+      title: summaryContent.title,
     };
 
     console.log("\nSummary Generation Successful");
