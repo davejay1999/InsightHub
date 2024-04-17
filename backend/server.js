@@ -33,6 +33,7 @@ app.use("/", gptUiRoutes);
 
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use(express.static(path.join(__dirname, "..", "frontend/login")));
+app.use(express.static(path.join(__dirname, "..", "frontend/user-management")));
 
 const PORT = process.env.PORT || 3000;
 

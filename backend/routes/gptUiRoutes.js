@@ -12,7 +12,9 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/user-details", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/userDetails.html"));
+  res.sendFile(
+    path.join(__dirname, "../../frontend/user-management/userDetails.html")
+  );
 });
 
 // Serve the userDetails page
