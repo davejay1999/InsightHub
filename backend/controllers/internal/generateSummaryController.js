@@ -67,7 +67,7 @@ exports.summarize = async (req, res) => {
       error: "Internal Server Error",
       message: error.message,
       error_code: "2354r3w4",
-      details: error.response?.data || error,
+      details: error.response.data || error,
     });
   }
 };
