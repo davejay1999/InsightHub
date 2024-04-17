@@ -190,7 +190,7 @@ function handleSignin(event) {
         // Save the token for future use (e.g., in local storage or a cookie)
         localStorage.setItem("token", data.token);
         // Redirect to another page or perform further actions
-        window.location.href = "../summary/upload_with_url.html";
+        window.location.href = "../home/homepage.html";
       } else {
         // Display error message in a pop-up
         displayPopup(
