@@ -3,12 +3,10 @@ const pool = require("../../config/db");
 exports.fetchMcqData = async (req, res) => {
   const { user_id, mcq_id } = req.body;
 
-  if (!user_id) {
-    return res.status(400).json({ error: "No user_id provided" });
-  }
-
-  if (!mcq_id) {
-    return res.status(400).json({ error: "No mcq_id provided" });
+  if (!user_id || !mcq_id) {
+    return res
+      .status(400)
+      .json({ error: "Both user_id and mcq_id are required" });
   }
 
   try {
@@ -21,7 +19,7 @@ exports.fetchMcqData = async (req, res) => {
 
     const [rows] = await pool.query(query, [user_id, mcq_id]);
 
-    if (rows.length === 0) {
+    if (!rows.length) {
       return res
         .status(404)
         .json({ error: "No mcq found for the given user_id and mcq_id" });
