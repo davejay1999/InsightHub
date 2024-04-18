@@ -16,7 +16,11 @@ exports.getSummary = async (req, res) => {
   if (!videoId) {
     return res
       .status(400)
-      .json({ message: "No Video Id is Provided", json_data: req.body });
+      .json({
+        message: "No Video Id is Provided",
+        json_data: req.body,
+        error_code: "4362",
+      });
   }
 
   videoId = extractYouTubeID(videoId);
@@ -28,8 +32,6 @@ exports.getSummary = async (req, res) => {
       video_id: videoId,
     });
 
-    // Define summaryContent and usage variables here
-    console.log(JSON.stringify(addVideoToDbResponse.data));
     const cacheHitInt = addVideoToDbResponse.data.cache_hit ? 1 : 0;
 
     const [result] = await pool.query(

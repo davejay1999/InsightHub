@@ -41,14 +41,9 @@ exports.summarize = async (req, res) => {
       }
     );
 
-    console.log(
-      "Received response from OpenAI: " + JSON.stringify(response.data)
-    );
-
+    console.log("Received response from OpenAI: ");
     const summaryContent = JSON.parse(response.data.choices[0].message.content);
     const usage = response.data.usage;
-
-    console.log(`\n\n\n\n ${summaryContent.title} \n\n\n\n`);
 
     const customResponse = {
       summary: summaryContent.summary,

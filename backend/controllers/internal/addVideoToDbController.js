@@ -55,7 +55,7 @@ exports.addVideoToDb = async (req, res) => {
             title,
           ]
         );
-        console.log(`\n\n\n\n ${title} \n\n\n\n`);
+
         responseData = {
           ...responseData,
           transcript,
