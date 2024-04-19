@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>User Details</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #e9ecef;
-        }
-        .user-details-container {
-            max-width: 1000px;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-        h2 {
-            color: #CD5C5C;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .user-data {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .user-data li {
-            padding: 12px 20px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .user-data li:last-child {
-            border-bottom: none;
-        }
-        .user-data label {
-            font-weight: bold;
-            color: #343a40;
-        }
-        .user-data span {
-            float: right;
-            color: #495057;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #e9ecef;
+      }
+      .user-details-container {
+        max-width: 1000px;
+        margin: 30px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      h2 {
+        color: #cd5c5c;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .user-data {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .user-data li {
+        padding: 12px 20px;
+        border-bottom: 1px solid #dee2e6;
+      }
+      .user-data li:last-child {
+        border-bottom: none;
+      }
+      .user-data label {
+        font-weight: bold;
+        color: #343a40;
+      }
+      .user-data span {
+        float: right;
+        color: #495057;
+      }
 
-        .btn {
-  width: 100px;
-  background-color: #CD5C5C;
-  border: none;
-  outline: none;
-  height: 30px;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  margin: 10px 0;
-  cursor: pointer;
-  transition: 0.5s;
-}
+      .btn {
+        width: 100px;
+        background-color: #cd5c5c;
+        border: none;
+        outline: none;
+        height: 30px;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 600;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: 0.5s;
+      }
     </style>
     <script src="../verifyLogin.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="user-details-container">
-        <h2>User Details</h2>
-        <ul id="userData" class="user-data">
-            <!-- User details will be populated here -->
-        </ul>
-        <button class= 'btn' id="logoutButton">Logout</button>
-        <button class= 'btn' onclick="window.location.href = '../home/homepage.html'">Home</button>
+      <h2>User Details</h2>
+      <ul id="userData" class="user-data">
+        <!-- User details will be populated here -->
+      </ul>
+      <button class="btn" id="logoutButton">Logout</button>
+      <button
+        class="btn"
+        onclick="window.location.href = '../home/homepage.html'"
+      >
+        Home
+      </button>
     </div>
 
-    
     <!-- JavaScript to handle fetching and displaying user details -->
     <script src="userDetails.js"></script>
 
-    
-
     <!-- Include the JavaScript file that contains the logout functionality -->
     <script src="logout.js"></script>
-</body>
+  </body>
 </html>
