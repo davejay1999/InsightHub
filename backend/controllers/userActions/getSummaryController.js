@@ -5,14 +5,13 @@ exports.getSummary = async (req, res) => {
   console.log("\n\nInside Get Summary from User \n\n");
 
   const userId = req.body.user_id;
-
   if (!userId) {
-    res
+    return res
       .status(400)
       .json({ message: "No User Id is Provided", json_data: req.body });
   }
 
-  const videoId = req.body.video_id;
+  let videoId = req.body.video_id;
   if (!videoId) {
     return res.status(400).json({
       message: "No Video Id is Provided",
@@ -62,7 +61,7 @@ exports.getSummary = async (req, res) => {
     console.error("Error in addVideoToDb request:", error);
     const errorData = error.response ? error.response.data : {};
     res.status(500).json({
-      error: "Internal Server Error ",
+      error: "Internal Server Error",
       message: error.message,
       ...errorData,
     });
@@ -72,22 +71,18 @@ exports.getSummary = async (req, res) => {
 function extractYouTubeID(input) {
   try {
     console.log("Input:", input);
-
-    // Check if input is a valid YouTube ID
     if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
       console.log("Valid YouTube ID:", input);
       return input;
     }
-
-    // Extract the YouTube ID from the URL
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = input.match(regExp);
-
     const result = match && match[2].length === 11 ? match[2] : null;
     console.log("Extracted YouTube ID:", result);
     return result;
   } catch {
-    return input;
+    console.error("Error extracting YouTube ID");
+    return null;
   }
 }
