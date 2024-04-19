@@ -12,15 +12,13 @@ exports.getSummary = async (req, res) => {
       .json({ message: "No User Id is Provided", json_data: req.body });
   }
 
-  let videoId = req.body.video_id;
+  const videoId = req.body.video_id;
   if (!videoId) {
-    return res
-      .status(400)
-      .json({
-        message: "No Video Id is Provided",
-        json_data: req.body,
-        error_code: "4362",
-      });
+    return res.status(400).json({
+      message: "No Video Id is Provided",
+      json_data: req.body,
+      error_code: "4362",
+    });
   }
 
   videoId = extractYouTubeID(videoId);
