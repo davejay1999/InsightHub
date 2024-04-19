@@ -79,14 +79,20 @@ signUpForm.addEventListener("submit", function (event) {
     const password = document.querySelector(
       '.sign-up-form input[type="password"]'
     ).value;
+    const fname = document.querySelector(
+		'.sign-up-form input[type="fname"]'
+	  ).value;
+	  const lname = document.querySelector(
+		'.sign-up-form input[type="lname"]'
+	  ).value;
 
     // Prepare request body
     const requestBody = JSON.stringify({
       email: email,
       password: password,
-      fname: "aa",
-      lname: "aa",
-      phone: "456468",
+      fname: fname,
+      lname: lname,
+      phone: "0123456789",
       gender: "male",
       dob: "2020-11-1",
       // Add other fields if needed (e.g., fname, lname, phone, gender, dob)
