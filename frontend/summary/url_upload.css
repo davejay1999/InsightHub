@@ -122,7 +122,7 @@ form input:valid ~ button{
   border: 3px dotted rgb(195, 32, 32);
   padding: 15px;
   width: 35%;
-  height: auto;
+  height: 20%;
   position: relative;
   left: 10%;
   top: 20%;
@@ -148,6 +148,7 @@ form input:valid ~ button{
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  z-index: 1;
 }
 
 #uploadButton1:hover {
@@ -155,9 +156,12 @@ form input:valid ~ button{
 }
 
 #loading-spinner {
+  position: absolute;
   margin-left: 10px; /* Adjust margin as needed */
   width: 50px; /* Adjust size as needed */
   height: 50px; /* Adjust size as needed */
+  left: 45%;
+  z-index: 0;
 }
 
 
@@ -166,7 +170,7 @@ form input:valid ~ button{
   border: 3px dotted rgb(195, 32, 32);
   padding: 15px;
   width: 35%;
-  height: auto;
+  height: 20%;
   position: relative;
   top: -4%;
   left: 50%;
@@ -190,17 +194,14 @@ form input:valid ~ button{
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  z-index: 1;
+
 }
 
 #uploadButton2:hover {
   background-color: #df808d;
 }
 
-#loading-spinner {
-  margin-left: 10px; /* Adjust margin as needed */
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Adjust size as needed */
-}
 
 header h1{
   font-size: 20px;
