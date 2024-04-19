@@ -294,15 +294,6 @@ backdrop.addEventListener('click', closePopup);
 					<h1>
 						Transcript
 					</h1>
-					The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-					One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-					Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
-					The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-					One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-					Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
-					The United States of America, often referred to as the USA or simply the U.S., is a diverse and vast country located primarily in North America. With 50 states, it boasts a rich tapestry of cultures, landscapes, and histories. From the bustling streets of New York City to the serene beauty of the Grand Canyon, the USA offers a wide array of experiences for visitors and residents alike.
-					One of the world's leading economies, the USA has a significant influence on global politics, economics, and culture. It is home to some of the most prestigious universities, innovative companies, and influential figures in various fields. From Silicon Valley's tech giants to Hollywood's entertainment industry, the USA continues to drive advancements and shape global trends.
-					Despite its strengths, the USA faces challenges such as social inequality, political polarization, and environmental concerns. Efforts to address these issues, alongside ongoing debates on immigration, healthcare, and gun control, reflect the country's commitment to democracy, freedom, and progress. As it navigates the complexities of the 21st century, the USA remains a beacon of opportunity and a symbol of resilience on the world stage.
 					<div id="transcriptContent">    
 					</div>
 				</div>
@@ -328,8 +319,6 @@ backdrop.addEventListener('click', closePopup);
 			</div>
 			<script>
 				// Retrieve the summary from localStorage
-				localStorage.setItem('informalSummaryData', 'teydxtuicavpouayvfpusaydbf[pbg;iasufdgbpqiefugbpiqeubgfpiqefubgpqifubgqepirubgqepirubgqerg]');
-				localStorage.setItem('detailedSummaryData', 'qweqweqweqweqweqwepusaydbf[pbg;iasufdgbpqiefugbpiqeubgfpiqefubgpqifubgqepirubgqepirubgqerg]');
 				const summary = localStorage.getItem('summaryData');
 				// Display the summary in the designated HTML element
 				const summaryContent = document.getElementById('summaryContent');
@@ -488,43 +477,7 @@ backdrop.addEventListener('click', closePopup);
 				-->
 			<script>
 				// Sample MCQ data for testing
-				const mockMCQData = [
-				{
-				                    question: " consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?",
-				                    options: {
-				                        "A": "Option A:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "B": "Option B:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "C": "Option C:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "D": "Option D:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit."
-				                    },
-				                    answer: "B",
-				                    explanation: "This is the explanation for why Option B is the correct answer."
-				                },
-				                {
-				                    question: " lor sit amet, consectetur adipiscing elit. consectetur adipiscing elit. Sed do eiusmod consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?",
-				                    options: {
-				                        "A": "Option A: or sit amet, consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "B": "Option B: it amet, consectetur adipiscing elit.",
-				                        "C": "Option C:ectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "D": "Option D: Lorem it, consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit."
-				                    },
-				                    answer: "B",
-				                    explanation: "This is the explanation for why Option B is the correct answer."
-				                },
-				                {
-				                    question: " consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dolore magna aliqua?",
-				                    options: {
-				                        "A": " nsectetur adipiscing elit. consectetur adipiscing elit. Sed do eiusmod consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-				                        "B": "Option B:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "C": "Option C:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit.",
-				                        "D": "Option D:  consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit. consectetur adipiscing elit."
-				                    },
-				                    answer: "B",
-				                    explanation: "This is the explanation for why Option B is the correct answer."
-				                },
-				    // Add more sample MCQs as needed
-				];
-				
+				const mockMCQData = JSON.parse(localStorage.getItem('mcqData'));
 				// Function to generate MCQs dynamically
 				// Function to generate MCQs dynamically
 				function generateMCQs() {
