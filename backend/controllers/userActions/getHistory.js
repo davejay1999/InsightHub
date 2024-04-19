@@ -22,7 +22,10 @@ exports.getHistory = async (req, res) => {
   `;
 
     const [rows] = await pool.query(query, [user_id]);
-
+    res = {
+      ...res,
+      mcq: res.body.q_and_a,
+    };
     if (!rows.length) {
       return res
         .status(404)
