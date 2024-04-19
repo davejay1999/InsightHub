@@ -419,66 +419,10 @@ backdrop.addEventListener('click', closePopup);
 				</p>
 				<button class="pdf-btn"onclick="exportToPDF1()">Export to PDF</button>
 			</div>
-			<!--
-				<script>
-				    // Function to generate MCQs dynamically
-				    function generateMCQs() {
-				        // Retrieve MCQ doptionKeyata from localStorage
-				        const mcqData = JSON.parse(localStorage.getItem('mcqData'));
-				        const mcqsContainer = document.getElementById('mcqsContainer');
-				        
-				        // Clear previous MCQs if any
-				        mcqsContainer.innerHTML = '';
-				
-				        // Loop through MCQ data and create HTML elements for each question
-				        mcqData.forEach((mcq, index) => {
-				            const mcqDiv = document.createElement('div');
-				            mcqDiv.classList.add('mcq-question');
-				            mcqDiv.innerHTML = `<p>${index + 1}. ${mcq.question}</p>`;
-				            
-				            // Loop through options and create HTML buttons for each option
-				            Object.keys(mcq.options).forEach(optionKey => {
-				                const optionButton = document.createElement('button');
-				                optionButton.classList.add('option');
-				                optionButton.textContent = `${optionKey}) ${mcq.options[optionKey]}`;
-				
-				                // Add click event listener to check answer and apply color
-				                optionButton.addEventListener('click', () => {
-				                    // Remove color from all options
-				                    const allOptions = mcqDiv.querySelectorAll('.option');
-				                    allOptions.forEach(option => {
-				                        option.classList.remove('correct', 'wrong');
-				                    });
-				
-				                    // Apply color based on selected option
-				                    if (optionKey === mcq.answer) {
-				                        optionButton.classList.add('correct');
-				                    } else {
-				                        optionButton.classList.add('wrong');
-				                    }
-				                });
-				
-				                mcqDiv.appendChild(optionButton);
-				            });
-				
-				            // Add explanation below options
-				            const explanationDiv = document.createElement('div');
-				            explanationDiv.textContent = `Explanation: ${mcq.explanation}`;
-				            mcqDiv.appendChild(explanationDiv);
-				
-				            // Append MCQ div to container
-				            mcqsContainer.appendChild(mcqDiv);
-				        });
-				    }
-				
-				    // Add click event listener to the "Generate MCQs" button
-				    document.getElementById('generateMCQsButton').addEventListener('click', generateMCQs);
-				</script>
-				-->
+		
 			<script>
 				// Sample MCQ data for testing
 				const mockMCQData = JSON.parse(localStorage.getItem('mcqData'));
-				// Function to generate MCQs dynamically
 				// Function to generate MCQs dynamically
 				function generateMCQs() {
 				    const mcqsContainer = document.getElementById('mcqsContainer');
