@@ -59,7 +59,7 @@ function handleFiles(files) {
   // You can upload the files using AJAX or any other method here
 }
 
-function redirectToAnotherPage(type_of_data) {
+function redirectToAnotherPage() {
   // Show the buffering animation
   document.getElementById("loading-spinner").style.display = "block";
 
@@ -67,7 +67,7 @@ function redirectToAnotherPage(type_of_data) {
   const token = localStorage.getItem("token");
 
   // Retrieve the video URL from the input field
-  const videoUrl = document.getElementById("videoUrlInput1").value;
+  const videoUrl = document.getElementById("videoUrlInput2").value;
 
   // Prepare the request body with the video URL
   const requestBody = JSON.stringify({
@@ -82,7 +82,6 @@ function redirectToAnotherPage(type_of_data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
-      type: type_of_data,
     },
     body: requestBody,
   })
