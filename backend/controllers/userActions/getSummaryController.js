@@ -54,8 +54,7 @@ exports.getSummary = async (req, res) => {
     });
     console.log(
       "\n\nSummary send successfully. Total Tokens Used - ",
-      JSON.stringify(addVideoToDbResponse.data.token_used.total_tokens),
-      +"\n\n"
+      JSON.stringify(addVideoToDbResponse.data.token_used.total_tokens)
     );
   } catch (error) {
     console.error("Error in addVideoToDb request:", error);
