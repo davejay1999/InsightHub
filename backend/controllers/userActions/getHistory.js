@@ -22,17 +22,23 @@ exports.getHistory = async (req, res) => {
   `;
 
     const [rows] = await pool.query(query, [user_id]);
-    res = {
-      ...res,
-      mcq: res.body.q_and_a,
-    };
-    if (!rows.length) {
+
+    const modifiedRows = rows.map((row) => {
+      return {
+        ...row,
+        mcq: row.q_and_a,
+        // Remove the original q_and_a field
+        q_and_a: undefined,
+      };
+    });
+
+    if (!modifiedRows.length) {
       return res
         .status(404)
         .json({ error: "No records found for the provided user_id" });
     }
 
-    res.status(200).json(rows);
+    res.status(200).json(modifiedRows);
   } catch (error) {
     console.error(error);
     res
