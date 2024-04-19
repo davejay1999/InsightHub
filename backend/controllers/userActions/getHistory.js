@@ -33,9 +33,7 @@ exports.getHistory = async (req, res) => {
     });
 
     if (!modifiedRows.length) {
-      return res
-        .status(404)
-        .json({ error: "No records found for the provided user_id" });
+      res.status(201).json([]);
     }
 
     res.status(200).json(modifiedRows);
