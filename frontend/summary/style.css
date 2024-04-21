@@ -258,7 +258,6 @@ button:hover {
     width: 40px;
     height: 100%;
     border-radius: 5px;
-    background: transparent;
     background: linear-gradient(90deg, var(--color-secondary-fade) 0%, var(--color-secondary) 50%);
 }
 
@@ -302,7 +301,6 @@ i.user-icon {
     border-radius: 3px;
     margin-right: 6px;
     font-style: normal;
-    width: 18px;
     height: 18px;
     font-size: 15px;
     text-transform: uppercase;
