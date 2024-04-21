@@ -227,39 +227,6 @@ function handleSignin(event) {
     });
 }
 
-// function handleSignin(event) {
-//   event.preventDefault(); // Prevent form submission
-
-//   // Get input values
-//   const email = document.querySelector('.sign-in-form input[type="email"]').value;
-//   const password = document.querySelector('.sign-in-form input[type="password"]').value;
-
-//   // Prepare request body
-//   const requestBody = JSON.stringify({
-//       email: email,
-//       password: password
-//   });
-
-//   // Simulated mock data from the API
-//   const mockData = {
-//       'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE4LCJpYXQiOjE3MDk2ODcxNTYsImV4cCI6MTcwOTY5MDc1Nn0.bPsKh_Yj4E3L5DWlFcAr0O-0FBNZ3YQPFZrPGEKclUw'
-//   };
-
-//   // Simulate fetching data from the server (replace with actual fetch call)
-//   setTimeout(() => {
-//       // Check if the response contains a token
-//       if (mockData.hasOwnProperty('token')) {
-//           // Save the token for future use (e.g., in local storage or a cookie)
-//           localStorage.setItem('token', mockData.token);
-//           // Redirect to another page or perform further actions
-//           window.location.href = 'upload_with_url.html';
-//       } else {
-//           // Display error message in a pop-up
-//           displayPopup(".sign-in-error", "Invalid email or password. Please try again.");
-//       }
-//   }, 1000); // Simulated delay of 1 second for API call
-// }
-
 // Event listener for sign-in form submission
 signInForm.addEventListener("submit", function (event) {
   event.preventDefault(); // Prevent the default form submit action
