@@ -4,22 +4,25 @@ const axios = require("axios");
 exports.getHistory = async (req, res) => {
   const { user_id } = req.body;
 
-  if (!user_id) {
-    return res.status(400).json({ error: "user_id is required" });
+  // Validate user_id
+  if (!user_id || typeof user_id !== "number") {
+    return res
+      .status(400)
+      .json({ error: "user_id is required and must be a number" });
   }
 
   try {
     const query = `
-    SELECT 
-      ur.*, 
-      s.* 
-    FROM 
-      userRequests ur 
-    LEFT JOIN 
-      summaries s ON ur.videoId = s.video_id 
-    WHERE 
-      ur.userId = ?;
-  `;
+      SELECT 
+        ur.*, 
+        s.* 
+      FROM 
+        userRequests ur 
+      LEFT JOIN 
+        summaries s ON ur.videoId = s.video_id 
+      WHERE 
+        ur.userId = ?;
+    `;
 
     const [rows] = await pool.query(query, [user_id]);
 
