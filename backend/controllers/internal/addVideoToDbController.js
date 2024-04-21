@@ -28,7 +28,7 @@ exports.addVideoToDb = async (req, res) => {
         ...tokens,
       };
     } else {
-      const internalSummaryUrl = "http://localhost:3000/internal/summarize";
+      const internalSummaryUrl = "/internal/summarize";
       try {
         const internalSummaryResponse = await axios.post(internalSummaryUrl, {
           ...req.body,

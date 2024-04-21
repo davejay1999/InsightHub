@@ -33,13 +33,13 @@ exports.getHistory = async (req, res) => {
     });
 
     if (!modifiedRows.length) {
-      res.status(201).json([]);
+      return res.status(201).json([]);
     }
 
-    res.status(200).json(modifiedRows);
+    return res.status(200).json(modifiedRows);
   } catch (error) {
     console.error(error);
-    res
+    return res
       .status(500)
       .json({ error: "An error occurred while retrieving the records" });
   }

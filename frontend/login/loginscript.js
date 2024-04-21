@@ -79,12 +79,23 @@ signUpForm.addEventListener("submit", function (event) {
     const password = document.querySelector(
       '.sign-up-form input[type="password"]'
     ).value;
+    const phone_number = document.querySelector(
+      '.sign-up-form input[type="phone_number"]'
+    ).value;
     const fname = document.querySelector(
-		'.sign-up-form input[type="fname"]'
-	  ).value;
-	  const lname = document.querySelector(
-		'.sign-up-form input[type="lname"]'
-	  ).value;
+      '.sign-up-form input[type="fname"]'
+    ).value;
+    const lname = document.querySelector(
+      '.sign-up-form input[type="lname"]'
+    ).value;
+
+    const gender = document.querySelector(
+      '.sign-up-form input[type="gender"]'
+    ).value;
+
+    const dob = document.querySelector(
+      '.sign-up-form input[type="date"]'
+    ).value;
 
     // Prepare request body
     const requestBody = JSON.stringify({
@@ -92,9 +103,9 @@ signUpForm.addEventListener("submit", function (event) {
       password: password,
       fname: fname,
       lname: lname,
-      phone: "0123456789",
-      gender: "male",
-      dob: "2020-11-1",
+      phone: phone_number,
+      gender: gender,
+      dob: dob,
       // Add other fields if needed (e.g., fname, lname, phone, gender, dob)
     });
 
