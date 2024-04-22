@@ -87,6 +87,7 @@ exports.addVideoToDb = async (req, res) => {
     res.status(500).json({
       error: "Internal Server Error in Add video to db controller",
       message: error.message,
+      error_code: "46432",
     });
   }
 };
