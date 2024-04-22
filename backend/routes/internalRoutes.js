@@ -7,6 +7,6 @@ const addVideoToDbController = require("../controllers/internal/addVideoToDbCont
 
 router.post("/summarize", summaryController.summarize_yt);
 ///router.post("/getMcq", getMcqController.getMcq);
-router.post("/addVideoToDb", addVideoToDbController.addVideoToDb);
+router.post("/addVideoToDb", addVideoToDbController.videoCacheHandler);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const pool = require("../../config/db");
 
-exports.addVideoToDb = async (req, res) => {
+exports.videoCacheHandler = async (req, res) => {
   const videoId = req.body.video_id;
 
   try {

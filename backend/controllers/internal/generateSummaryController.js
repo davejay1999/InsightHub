@@ -15,7 +15,7 @@ exports.summarize_yt = async (req, res) => {
     const transcriptToSend = completeTranscript.slice(0, 5000);
 
     // Make the call to the separate function for API interaction
-    const apiResponse = await generateSummaryFromOpenAI(
+    const apiResponse = await genSummaryOpenAI(
       openAiAuthToken,
       llmModel,
       transcriptToSend
@@ -53,7 +53,7 @@ exports.summarize_yt = async (req, res) => {
 };
 
 // Function to handle API call to OpenAI for summary generation
-async function generateSummaryFromOpenAI(
+async function genSummaryOpenAI(
   openAiAuthToken,
   llmModel,
   transcript,
