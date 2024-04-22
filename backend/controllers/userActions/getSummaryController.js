@@ -8,7 +8,11 @@ exports.getSummary = async (req, res) => {
   if (!userId) {
     return res
       .status(400)
-      .json({ message: "No User Id is Provided", json_data: req.body });
+      .json({
+        message: "No User Id is Provided",
+        json_data: req.body,
+        error_code: "57346347",
+      });
   }
 
   let videoId = req.body.video_id;
