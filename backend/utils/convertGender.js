@@ -34,6 +34,9 @@ function convertGender(gender) {
     case "other":
     case "o":
       return 7;
+    case "u":
+    case "unknown":
+      return null;
     default:
       // If gender is not recognized, return null
       return null;

@@ -104,9 +104,8 @@ signUpForm.addEventListener("submit", function (event) {
       fname: fname,
       lname: lname,
       phone: phone_number,
-      gender: gender,
+      gender: "u",
       dob: dob,
-      // Add other fields if needed (e.g., fname, lname, phone, gender, dob)
     });
 
     // Make a POST request to the register endpoint
