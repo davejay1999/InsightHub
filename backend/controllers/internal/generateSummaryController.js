@@ -1,59 +1,43 @@
 const axios = require("axios");
 const { getSubtitles } = require("youtube-captions-scraper");
 
-exports.summarize = async (req, res) => {
-  const open_ai_auth_token = process.env.OPEN_AI_KEY;
+exports.summarize_yt = async (req, res) => {
+  const openAiAuthToken = process.env.OPEN_AI_KEY;
   const videoId = req.body.video_id;
-  const llm_model = req.body.llm_model || "gpt-3.5-turbo-0125";
-  let summary_word_count = Math.min(req.body.word_limit || 500, 200);
-  const additional_instructions = req.body.additional_instructions || "";
+  const llmModel = req.body.llm_model || "gpt-3.5-turbo-0125";
 
   console.log(
-    `\nStarting Summary Generation. Model: ${llm_model}, Word Limit: ${summary_word_count}`
+    `\nStarting Summary Generation. Model: ${llmModel}, Word Limit: ${summaryWordCount}`
   );
 
   try {
-    const complete_transcript = await getTranscript(videoId);
-    const transcript_to_send = complete_transcript.slice(0, 3000);
+    const completeTranscript = await getTranscript(videoId);
+    const transcriptToSend = completeTranscript.slice(0, 5000);
 
-    const requestBody = {
-      model: llm_model,
-      messages: [
-        {
-          role: "system",
-          content: constructPrompt(3, summary_word_count),
-        },
-        {
-          role: "user",
-          content: transcript_to_send,
-        },
-      ],
-    };
-
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      requestBody,
-      {
-        headers: {
-          Authorization: `Bearer ${open_ai_auth_token}`,
-          "Content-Type": "application/json",
-        },
-      }
+    // Make the call to the separate function for API interaction
+    const apiResponse = await generateSummaryFromOpenAI(
+      openAiAuthToken,
+      llmModel,
+      transcriptToSend
     );
 
-    console.log("Received response from OpenAI: ");
-    const summaryContent = JSON.parse(response.data.choices[0].message.content);
-    const usage = response.data.usage;
+    if (!apiResponse.success) {
+      throw apiResponse.error;
+    }
+
+    const summaryContent = JSON.parse(
+      apiResponse.data.choices[0].message.content
+    );
 
     const customResponse = {
       summary: summaryContent.summary,
       informal_summary: summaryContent.informal_summary,
       detailed_summary: summaryContent.detailed_summary,
       mcq: summaryContent.mcq,
-      usage: usage,
-      word_limit: summary_word_count,
-      additional_instructions: additional_instructions,
-      transcript: complete_transcript,
+      usage: apiResponse.data.usage,
+      word_limit: summaryWordCount,
+      additional_instructions: req.body.additional_instructions || "",
+      transcript: completeTranscript,
       title: summaryContent.title,
     };
 
@@ -65,10 +49,51 @@ exports.summarize = async (req, res) => {
       error: "Internal Server Error",
       message: error.message,
       error_code: "2354r3w4",
-      details: error.response.data || error,
+      details: error.response ? error.response.data : error,
     });
   }
 };
+
+// Function to handle API call to OpenAI for summary generation
+async function generateSummaryFromOpenAI(
+  openAiAuthToken,
+  llmModel,
+  transcript,
+  summaryWordCount
+) {
+  const requestBody = {
+    model: llmModel,
+    messages: [
+      {
+        role: "system",
+        content: constructPrompt(),
+      },
+      {
+        role: "user",
+        content: transcript,
+      },
+    ],
+  };
+
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${openAiAuthToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Received response from OpenAI: ");
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("API Call Failed: ", error);
+    return { success: false, error: error, error_code: "452365" };
+  }
+}
 
 async function getTranscript(videoId) {
   console.log("Extracting Subtitles/Transcript for videoId:", videoId);
@@ -83,7 +108,7 @@ async function getTranscript(videoId) {
   }
 }
 
-function constructPrompt(number_of_q, summary_word_limit) {
+function constructPrompt() {
   const prompt = `
     Only Respond in valid JSON Format.
     Your job is to input in a transcript given by user of a video and give produce 3 summaries - "summary" (short summary), "informal_summary" (in casual language), and a "detailed_summary"
@@ -92,8 +117,8 @@ function constructPrompt(number_of_q, summary_word_limit) {
     Example Output:
     "{
       "summary" : "100 word formal summary of the transcript .... ",
-      "informal_summary" : "100 word informal summary...",
-      "detailed_summary" : "200 word detailed summary ...",
+      "informal_summary" : "50 word casual summary...",
+      "detailed_summary" : "1000 word detailed summary and analysis ...",
       "title" : "title for summary",
 
     "mcq" : [

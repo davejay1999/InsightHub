@@ -5,7 +5,7 @@ const summaryController = require("../controllers/internal/generateSummaryContro
 // const getMcqController = require("../controllers/internal/generateMcqController");
 const addVideoToDbController = require("../controllers/internal/addVideoToDbController");
 
-router.post("/summarize", summaryController.summarize);
+router.post("/summarize", summaryController.summarize_yt);
 ///router.post("/getMcq", getMcqController.getMcq);
 router.post("/addVideoToDb", addVideoToDbController.addVideoToDb);
 
