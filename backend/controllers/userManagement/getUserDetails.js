@@ -21,7 +21,9 @@ exports.getUserDetails = async (req, res) => {
     ]);
 
     if (users.length === 0) {
-      return res.status(404).json({ message: "User not found " + user_id });
+      return res
+        .status(404)
+        .json({ message: "User not found " + user_id, error_code: "75432" });
     }
 
     const userData = users[0];
