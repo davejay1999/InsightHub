@@ -62,6 +62,7 @@ exports.getSummary = async (req, res) => {
     res.status(500).json({
       error: "Internal Server Error",
       message: error.message,
+      error_code: "576435",
       ...errorData,
     });
   }
