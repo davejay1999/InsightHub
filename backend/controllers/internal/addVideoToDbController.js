@@ -2,38 +2,38 @@ const axios = require("axios");
 const pool = require("../../config/db");
 
 exports.videoCacheHandler = async (req, res) => {
-  const videoId = req.body.video_id;
+  const { video_id: videoId } = req.body;
 
   try {
+    // Query database for existing video
     const [existingVideo] = await pool.query(
       "SELECT * FROM summaries WHERE video_id = ?",
       [videoId]
     );
-    let cacheHit = existingVideo.length > 0;
+    const cacheHit = existingVideo.length > 0;
     let responseData = { videoId };
 
     console.log(`Cache hit status - ${cacheHit}`);
 
     if (cacheHit) {
-      const tokens = {
+      // Handling cache hit scenario
+      responseData = {
+        ...responseData,
+        ...existingVideo[0],
         token_used: {
           total_tokens: 0,
           completion_tokens: 0,
           prompt_tokens: 0,
         },
       };
-      responseData = {
-        ...responseData,
-        ...existingVideo[0],
-        ...tokens,
-      };
     } else {
+      // Handling cache miss scenario
       const internalSummaryUrl = "http://localhost:3000/internal/summarize";
-
       try {
-        const internalSummaryResponse = await axios.post(internalSummaryUrl, {
-          ...req.body,
-        });
+        const internalSummaryResponse = await axios.post(
+          internalSummaryUrl,
+          req.body
+        );
         const {
           summary,
           informal_summary,
@@ -45,7 +45,7 @@ exports.videoCacheHandler = async (req, res) => {
         } = internalSummaryResponse.data;
 
         await pool.query(
-          "INSERT INTO summaries (video_id, transcript, summary, q_and_a,  informal_summary, detailed_summary, title) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          "INSERT INTO summaries (video_id, transcript, summary, q_and_a, informal_summary, detailed_summary, title) VALUES (?, ?, ?, ?, ?, ?, ?)",
           [
             videoId,
             transcript,
@@ -65,9 +65,8 @@ exports.videoCacheHandler = async (req, res) => {
           detailed_summary,
           mcq,
           title,
+          token_used: usage,
         };
-
-        responseData.token_used = usage;
       } catch (error) {
         console.error("Error fetching summary:", error);
         return res.status(500).json({
@@ -84,9 +83,9 @@ exports.videoCacheHandler = async (req, res) => {
       ...responseData,
     });
   } catch (error) {
-    console.error("Error in addVideoToDb:", error);
+    console.error("Error in videoCacheHandler:", error);
     res.status(500).json({
-      error: "Internal Server Error in Add video to db controller",
+      error: "Internal Server Error in video cache handler",
       message: error.message,
       error_code: "46432",
     });
