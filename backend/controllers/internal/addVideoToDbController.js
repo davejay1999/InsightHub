@@ -27,7 +27,7 @@ exports.addVideoToDb = async (req, res) => {
         ...existingVideo[0],
         ...tokens,
       };
-    } else 
+    } else {
       const internalSummaryUrl = "http://localhost/internal/summarize";
 
       try {
