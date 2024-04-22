@@ -74,6 +74,7 @@ exports.addVideoToDb = async (req, res) => {
           error: "Internal Server Error while fetching summary",
           message: error.message,
           details: error.response ? error.response.data : {},
+          error_code: "54329",
         });
       }
     }
