@@ -35,8 +35,6 @@ exports.summarize_yt = async (req, res) => {
       detailed_summary: summaryContent.detailed_summary,
       mcq: summaryContent.mcq,
       usage: apiResponse.data.usage,
-      word_limit: summaryWordCount,
-      additional_instructions: req.body.additional_instructions || "",
       transcript: completeTranscript,
       title: summaryContent.title,
     };
@@ -48,7 +46,7 @@ exports.summarize_yt = async (req, res) => {
     res.status(500).json({
       error: "Internal Server Error",
       message: error.message,
-      error_code: "2354r3w4",
+      error_code: "235434",
       details: error.response ? error.response.data : error,
     });
   }
