@@ -32,8 +32,6 @@ exports.getSummary = async (req, res) => {
       video_id: videoId,
     });
 
-    const cacheHitInt = addVideoToDbResponse.data.cache_hit ? 1 : 0;
-
     const [result] = await pool.query(
       "INSERT INTO userRequests (videoId, userId, total_tokens, completion_tokens, prompt_tokens, score, totalScore, cache_hit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -44,7 +42,7 @@ exports.getSummary = async (req, res) => {
         addVideoToDbResponse.data.token_used.prompt_tokens,
         null,
         null,
-        cacheHitInt,
+        addVideoToDbResponse.data.cache_hit ? 1 : 0,
       ]
     );
 
