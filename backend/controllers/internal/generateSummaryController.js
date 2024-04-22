@@ -104,7 +104,7 @@ function constructPrompt() {
   const prompt = `
     Only Respond in valid JSON Format.
     Your job is to input in a transcript given by user of a video and give produce 3 summaries - "summary" (short summary), "informal_summary" (in casual language), and a "detailed_summary"
-      generate ${number_of_q} multiple-choice questions based on the content. Each question should have four options (A, B, C, D) and a correct answer.
+      generate 3 multiple-choice questions based on the content. Each question should have four options (A, B, C, D) and a correct answer.
 
     Example Output:
     "{
