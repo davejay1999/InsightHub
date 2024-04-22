@@ -5,6 +5,7 @@ exports.summarize_yt = async (req, res) => {
   const openAiAuthToken = process.env.OPEN_AI_KEY;
   const videoId = req.body.video_id;
   const llmModel = req.body.llm_model || "gpt-3.5-turbo-0125";
+  const summaryWordCount = req.body.summary_word_count;
 
   console.log(
     `\nStarting Summary Generation. Model: ${llmModel}, Word Limit: ${summaryWordCount}`
@@ -14,7 +15,6 @@ exports.summarize_yt = async (req, res) => {
     const completeTranscript = await getTranscript(videoId);
     const transcriptToSend = completeTranscript.slice(0, 5000);
 
-    // Make the call to the separate function for API interaction
     const apiResponse = await genSummaryOpenAI(
       openAiAuthToken,
       llmModel,
@@ -22,7 +22,7 @@ exports.summarize_yt = async (req, res) => {
     );
 
     if (!apiResponse.success) {
-      throw apiResponse.error;
+      throw new Error(apiResponse.error.message);
     }
 
     const summaryContent = JSON.parse(
@@ -52,13 +52,7 @@ exports.summarize_yt = async (req, res) => {
   }
 };
 
-// Function to handle API call to OpenAI for summary generation
-async function genSummaryOpenAI(
-  openAiAuthToken,
-  llmModel,
-  transcript,
-  summaryWordCount
-) {
+async function genSummaryOpenAI(openAiAuthToken, llmModel, transcript) {
   const requestBody = {
     model: llmModel,
     messages: [
@@ -97,7 +91,7 @@ async function getTranscript(videoId) {
   console.log("Extracting Subtitles/Transcript for videoId:", videoId);
   try {
     const subtitles = await getSubtitles({ videoID: videoId, lang: "en" });
-    const transcript = subtitles.map((subtitle) => subtitle.text).join(" ");
+    const transcript = subtitles.map((sub) => sub.text).join(" ");
     console.log("DONE - Extracting Subtitles: " + transcript.slice(0, 50));
     return transcript;
   } catch (error) {
