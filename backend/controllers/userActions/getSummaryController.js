@@ -6,13 +6,11 @@ exports.getSummary = async (req, res) => {
 
   const userId = req.body.user_id;
   if (!userId) {
-    return res
-      .status(400)
-      .json({
-        message: "No User Id is Provided",
-        json_data: req.body,
-        error_code: "57346347",
-      });
+    return res.status(400).json({
+      message: "No User Id is Provided",
+      json_data: req.body,
+      error_code: "57346347",
+    });
   }
 
   let videoId = req.body.video_id;
@@ -27,8 +25,9 @@ exports.getSummary = async (req, res) => {
   videoId = extractYouTubeID(videoId);
 
   try {
-    const addVideoToDbUrl = "http://localhost:3000/internal/addVideoToDb";
-    const addVideoToDbResponse = await axios.post(addVideoToDbUrl, {
+    const video_cached_handler_url =
+      "http://localhost:3000/internal/addVideoToDb";
+    const addVideoToDbResponse = await axios.post(video_cached_handler_url, {
       ...req.body,
       video_id: videoId,
     });
