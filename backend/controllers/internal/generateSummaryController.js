@@ -110,7 +110,7 @@ function constructPrompt() {
     "{
       "summary" : "100 word formal summary of the transcript .... ",
       "informal_summary" : "50 word casual summary...",
-      "detailed_summary" : "1000 word detailed summary and analysis ...",
+      "detailed_summary" : "1000 word long and detailed summary and analysis ...",
       "title" : "title for summary",
 
     "mcq" : [
