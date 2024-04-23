@@ -1,104 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>User History</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+        background-color: #f4f4f4;
+        color: #333;
+      }
 
-        #userHistory {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
+      #userHistory {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
 
-        li {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            padding: 10px;
-            transition: background-color 0.3s;
-        }
+      li {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 10px;
+        transition: background-color 0.3s;
+      }
 
-        li:hover {
-            background-color: #e9e9e9;
-        }
-        .btn {
-            width: 100px;
-            background-color: #CD5C5C;
-            border: none;
-            outline: none;
-            height: 30px;
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 600;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: 0.5s;
-            }
-        p {
-            margin: 5px 0;
-        }
+      li:hover {
+        background-color: #e9e9e9;
+      }
+      .btn {
+        width: 100px;
+        background-color: #cd5c5c;
+        border: none;
+        outline: none;
+        height: 30px;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 600;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+      p {
+        margin: 5px 0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="userHistory">Loading user history...</div>
-    <button class= 'btn' onclick="window.location.href = '../home/homepage.html'">Home</button>
-
+    <button
+      class="btn"
+      onclick="window.location.href = '../home/homepage.html'"
+    >
+      Home
+    </button>
 
     <script>
-        // JavaScript code remains unchanged
-        function fetchUserHistory() {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                document.getElementById("userHistory").innerHTML = "No authentication token found, please login.";
-                return;
-            }
+      // JavaScript code remains unchanged
+      function fetchUserHistory() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          document.getElementById("userHistory").innerHTML =
+            "No authentication token found, please login.";
+          return;
+        }
 
-            fetch("/user/action/getHistory", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const historyItems = data.map(item => `
+        fetch("/user/action/getHistory", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const historyItems = data
+              .map(
+                (item) => `
                     <li>
                         <p>ID: ${item.id}</p>
                         <p>Video ID: ${item.videoId}</p>
                         <p>Total Tokens: ${item.total_tokens}</p>
+                         <p>Title: ${item.title}</p>
                         <p>Summary: ${item.summary}</p>
+
                     </li>
-                `).join('');
+                `
+              )
+              .join("");
 
-                document.getElementById("userHistory").innerHTML = `<ul>${historyItems}</ul>`;
-            })
-            .catch((error) => {
-                console.error("There was a problem with your fetch operation:", error);
-                document.getElementById("userHistory").innerHTML = "Error fetching history.";
-            });
-        }
+            document.getElementById(
+              "userHistory"
+            ).innerHTML = `<ul>${historyItems}</ul>`;
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with your fetch operation:",
+              error
+            );
+            document.getElementById("userHistory").innerHTML =
+              "Error fetching history.";
+          });
+      }
 
-        document.addEventListener("DOMContentLoaded", fetchUserHistory);
+      document.addEventListener("DOMContentLoaded", fetchUserHistory);
     </script>
-</body>
+  </body>
 </html>

@@ -57,6 +57,10 @@ exports.videoCacheHandler = async (req, res) => {
           ]
         );
 
+        console.log(
+          `added to db ${JSON.stringify(internalSummaryResponse.data)}`
+        );
+
         responseData = {
           ...responseData,
           transcript,
