@@ -61,13 +61,13 @@ function handleFiles(files) {
 
 function redirectToAnotherPage() {
   // Show the buffering animation
-  document.getElementById("uploadButton1").style.display = "none";
+  // document.getElementById("uploadButton1").style.display = "none";
   document.getElementById("uploadButton2").style.display = "none";
 
   // Set a timeout to display the uploadButton2 element again after 20 seconds
-  setTimeout(function() {
-      document.getElementById("uploadButton1").style.display = "block";
-      document.getElementById("uploadButton2").style.display = "block"; 
+  setTimeout(function () {
+    document.getElementById("uploadButton1").style.display = "block";
+    document.getElementById("uploadButton2").style.display = "block";
   }, 10000);
   // Retrieve the authentication token from localStorage
   const token = localStorage.getItem("token");
