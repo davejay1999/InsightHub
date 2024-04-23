@@ -121,7 +121,7 @@ function constructPrompt() {
                 // more options
             },
             "answer": "B",
-            "explanation" : "justification ..."
+            "explanation" : "short justification ..."
         },
         {
             // next question
