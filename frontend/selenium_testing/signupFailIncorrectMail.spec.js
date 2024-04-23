@@ -3,7 +3,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 
 describe('Signup_Fail_Incorrect_Mail', function() {
-  this.timeout(30000)
+  
   let driver
   let vars
   beforeEach(async function() {
