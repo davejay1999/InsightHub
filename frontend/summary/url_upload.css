@@ -172,9 +172,10 @@ form input:valid ~ button{
   width: 35%;
   height: 20%;
   position: relative;
-  top: -4%;
-  left: 50%;
+  left: 30%;
+  top: 20%;
   text-align: center;
+
 }
 
 .button-container {
