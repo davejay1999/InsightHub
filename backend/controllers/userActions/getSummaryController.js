@@ -37,7 +37,7 @@ exports.getSummary = async (req, res) => {
     const [result] = await pool.query(
       "INSERT INTO userRequests (videoId, userId, total_tokens, completion_tokens, prompt_tokens, score, totalScore, cache_hit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        videoId,
+        new_video_id,
         userId,
         addVideoToDbResponse.data.token_used.total_tokens,
         addVideoToDbResponse.data.token_used.completion_tokens,
