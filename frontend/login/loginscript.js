@@ -79,22 +79,11 @@ signUpForm.addEventListener("submit", function (event) {
     const password = document.querySelector(
       '.sign-up-form input[type="password"]'
     ).value;
-    const phone_number = document.querySelector(
-      '.sign-up-form input[type="phone_number"]'
-    ).value;
     const fname = document.querySelector(
       '.sign-up-form input[type="fname"]'
     ).value;
     const lname = document.querySelector(
       '.sign-up-form input[type="lname"]'
-    ).value;
-
-    const gender = document.querySelector(
-      '.sign-up-form input[type="gender"]'
-    ).value;
-
-    const dob = document.querySelector(
-      '.sign-up-form input[type="date"]'
     ).value;
 
     // Prepare request body
@@ -103,9 +92,9 @@ signUpForm.addEventListener("submit", function (event) {
       password: password,
       fname: fname,
       lname: lname,
-      phone: phone_number,
-      gender: "u",
-      dob: dob,
+      phone: "1234567890",
+      gender: "M",
+      dob: "2021-01-01",
     });
 
     // Make a POST request to the register endpoint
