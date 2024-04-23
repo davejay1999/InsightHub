@@ -4,25 +4,22 @@ const axios = require("axios");
 exports.getHistory = async (req, res) => {
   const { user_id } = req.body;
 
-  // Validate user_id
-  if (!user_id || typeof user_id !== "number") {
-    return res
-      .status(400)
-      .json({ error: "user_id is required and must be a number" });
+  if (!user_id) {
+    return res.status(400).json({ error: "user_id is required" });
   }
 
   try {
     const query = `
-      SELECT 
-        ur.*, 
-        s.* 
-      FROM 
-        userRequests ur 
-      LEFT JOIN 
-        summaries s ON ur.videoId = s.video_id 
-      WHERE 
-        ur.userId = ?;
-    `;
+    SELECT 
+      ur.*, 
+      s.* 
+    FROM 
+      userRequests ur 
+    LEFT JOIN 
+      summaries s ON ur.videoId = s.video_id 
+    WHERE 
+      ur.userId = ?;
+  `;
 
     const [rows] = await pool.query(query, [user_id]);
 
@@ -36,13 +33,15 @@ exports.getHistory = async (req, res) => {
     });
 
     if (!modifiedRows.length) {
-      return res.status(201).json([]);
+      return res
+        .status(404)
+        .json({ error: "No records found for the provided user_id" });
     }
 
-    return res.status(200).json(modifiedRows);
+    res.status(200).json(modifiedRows);
   } catch (error) {
     console.error(error);
-    return res
+    res
       .status(500)
       .json({ error: "An error occurred while retrieving the records" });
   }
