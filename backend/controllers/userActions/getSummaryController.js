@@ -22,14 +22,16 @@ exports.getSummary = async (req, res) => {
     });
   }
 
-  videoId = extractYouTubeID(videoId);
+  const new_video_id = extractYouTubeID(videoId);
+
+  console.log("video id " + videoId + " " + new_video_id);
 
   try {
     const video_cached_handler_url =
       "http://localhost:3000/internal/addVideoToDb";
     const addVideoToDbResponse = await axios.post(video_cached_handler_url, {
       ...req.body,
-      video_id: videoId,
+      video_id: new_video_id,
     });
 
     const [result] = await pool.query(

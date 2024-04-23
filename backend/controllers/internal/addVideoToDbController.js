@@ -3,7 +3,7 @@ const pool = require("../../config/db");
 
 exports.videoCacheHandler = async (req, res) => {
   const { video_id: videoId } = req.body;
-
+  console.log("video id ===" + videoId);
   try {
     // Query database for existing video
     const [existingVideo] = await pool.query(
