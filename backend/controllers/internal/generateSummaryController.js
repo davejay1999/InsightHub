@@ -30,13 +30,13 @@ exports.summarize_yt = async (req, res) => {
     );
 
     const customResponse = {
+      title: summaryContent.title,
       summary: summaryContent.summary,
       informal_summary: summaryContent.informal_summary,
       detailed_summary: summaryContent.detailed_summary,
       mcq: summaryContent.mcq,
       usage: apiResponse.data.usage,
       transcript: completeTranscript,
-      title: summaryContent.title,
     };
 
     console.log("\nSummary Generation Successful");
